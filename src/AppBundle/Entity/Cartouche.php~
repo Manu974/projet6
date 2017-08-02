@@ -3,8 +3,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-
 
 /**
  * Cartouche
@@ -224,45 +222,5 @@ class Cartouche
     {
         return $this->statuscommande;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->printers = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add printer
-     *
-     * @param \AppBundle\Entity\Imprimante $printer
-     *
-     * @return Cartouche
-     */
-    public function addPrinter(\AppBundle\Entity\Imprimante $printer)
-    {
-        $this->printers[] = $printer;
-
-        return $this;
-    }
-
-    /**
-     * Remove printer
-     *
-     * @param \AppBundle\Entity\Imprimante $printer
-     */
-    public function removePrinter(\AppBundle\Entity\Imprimante $printer)
-    {
-        $this->printers->removeElement($printer);
-    }
-
-    /**
-     * Get printers
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPrinters()
-    {
-        return $this->printers;
-    }
 }
+
