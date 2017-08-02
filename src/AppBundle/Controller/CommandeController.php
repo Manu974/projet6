@@ -80,4 +80,33 @@ class CommandeController extends Controller
 
     }
 
+    /**
+     * @Route("/cartridge/commande/valid/{id}", name="validCommande")
+     */
+    public function validAction(Request $request, $id)
+    {
+        $repositoryCommande = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('AppBundle:Commande')
+        ;
+
+        $commandes = $repositoryCommande->findBy(['cartouche' => $id]);
+
+        $em = $this->getDoctrine()->getManager();
+        foreach ($commandes as $commande) {
+            $commande->setStatuscommande(true);
+            $commande->getCartouche()->setQuantite($commande->getQuantite()+$commande->getCartouche()->getQuantite());
+            $commande->getCartouche()->setStatuscommande(false);
+            $commande->getCartouche()->setReapprovisionnement(new \Datetime("now"));
+            $em->remove($commande);
+        }
+       
+        $em->flush();
+        return $this->redirectToRoute('cartridgepage');
+
+    }
+
+
+
 }

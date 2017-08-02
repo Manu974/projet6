@@ -40,9 +40,10 @@ class CartridgeController extends Controller
     {
         $cartridge = new Cartouche();
         $cartridge->setStatuscommande(false);
+        $cartridge->setReapprovisionnement(null);
         $form = $this->get('form.factory')->create(CartoucheType::class, $cartridge);
 
-       if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+          if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 
           $em = $this->getDoctrine()->getManager();
          

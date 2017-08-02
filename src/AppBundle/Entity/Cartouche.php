@@ -54,7 +54,7 @@ class Cartouche
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="reapprovisionnement", type="datetime")
+     * @ORM\Column(name="reapprovisionnement", type="datetime", nullable=true)
      */
     private $reapprovisionnement;
 
@@ -230,7 +230,7 @@ class Cartouche
     public function __construct()
     {
         $this->printers = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->reapprovisionnement = new \DateTime('now');
+        
     }
 
     /**
