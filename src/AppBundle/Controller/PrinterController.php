@@ -55,4 +55,59 @@ class PrinterController extends Controller
             "form" => $form->createView(),
         ]);
     }
+
+
+    /**
+     * @Route("/printer/edit/{id}", name="editprinterpage")
+     */
+    public function editAction(Request $request, $id)
+    {
+
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('AppBundle:Imprimante')
+        ;
+
+        $printer = $repository->find($id);
+
+        $form = $this->get('form.factory')->create(ImprimanteType::class, $printer);
+
+       if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+          $em = $this->getDoctrine()->getManager();
+          
+          $em->flush();
+
+          $request->getSession()->getFlashBag()->add('message', 'Imprimante mise a jour.');
+
+          return $this->redirectToRoute('printerpage');
+        }   
+
+        // replace this example code with whatever you need
+        return $this->render('printer/add.html.twig', [
+            "form" => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/printer/delete/{id}", name="deleteprinterpage")
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('AppBundle:Imprimante')
+        ;
+        
+        $printer = $repository->find($id);
+        
+        $em->remove($printer);
+        $em->flush();
+
+        $request->getSession()->getFlashBag()->add('message', 'Imprimante mise a jour.');
+        
+        return $this->redirectToRoute('printerpage');
+    }
 }

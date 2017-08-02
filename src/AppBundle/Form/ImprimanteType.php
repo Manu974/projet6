@@ -41,7 +41,9 @@ class ImprimanteType extends AbstractType
             ->add('garantie', IntegerType::class, [
                 'label' => 'Années de garantie',
                 ])
-            ->add('save', SubmitType::class);
+            ->add('save', SubmitType::class, [
+                'label' => 'Valider'
+                ]);
     }
     
     /**
