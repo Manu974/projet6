@@ -31,6 +31,8 @@
       {{ printer.modele }}{% if not loop.last %}, {% endif %}
     {% endfor %}</td>
     <td>{{cartridge.statuscommande}}</td>
+    <td><a href="{{ path('editcartridgepage', { 'id': cartridge.id }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-edit"></span>
+    </a></td>
     
    </tr>
     {% endfor %}

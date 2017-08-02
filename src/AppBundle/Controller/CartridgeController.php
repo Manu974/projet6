@@ -60,38 +60,40 @@ class CartridgeController extends Controller
         ]);
     }
 
-/*
-    
+
+     /**
+     * @Route("/cartridge/edit/{id}", name="editcartridgepage")
+     */
     public function editAction(Request $request, $id)
     {
 
         $repository = $this
             ->getDoctrine()
             ->getManager()
-            ->getRepository('AppBundle:Imprimante')
+            ->getRepository('AppBundle:Cartouche')
         ;
 
-        $printer = $repository->find($id);
+        $cartridge = $repository->find($id);
 
-        $form = $this->get('form.factory')->create(ImprimanteType::class, $printer);
+        $form = $this->get('form.factory')->create(CartoucheType::class, $cartridge);
 
        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
           $em = $this->getDoctrine()->getManager();
           
           $em->flush();
 
-          $request->getSession()->getFlashBag()->add('message', 'Imprimante mise a jour.');
+          $request->getSession()->getFlashBag()->add('message', 'Cartouche mise a jour.');
 
-          return $this->redirectToRoute('printerpage');
+          return $this->redirectToRoute('cartridgepage');
         }   
 
         // replace this example code with whatever you need
-        return $this->render('printer/add.html.twig', [
+        return $this->render('cartridge/add.html.twig', [
             "form" => $form->createView(),
         ]);
     }
 
-   
+    /*
     public function deleteAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
