@@ -70,6 +70,8 @@ class Cartouche
     */
     private $printers;
 
+   
+
 
     /**
      * Get id
@@ -266,4 +268,5 @@ class Cartouche
     {
         return $this->printers;
     }
+
 }

@@ -21,11 +21,11 @@
    </thead>
    <tbody>
    {% for cartridge in cartridges %}
-   <tr>
+   <tr data-quantite={{cartridge.quantite}}>
     <td>{{cartridge.marque}}</td>
     <td>{{cartridge.modele}}</td>
     <td>{{cartridge.type}}</td>
-    <td>{{cartridge.quantite}}</td>
+    <td>{{cartridge.quantite}} {% if cartridge.quantite < 5 and cartridge.quantite >= 3  %}<span class=" glyphicon glyphicon-exclamation-sign"></span>{% endif%} {% if cartridge.quantite < 3 %}<span class="   glyphicon glyphicon-tint"></span>{% endif%}</td>
     <td>{% if cartridge.reapprovisionnement %}{{cartridge.reapprovisionnement|date("m/d/Y")}}{% else %} Pas d'ajout{% endif%}</td>
     <td>{% for printer in cartridge.printers %}
       {{ printer.modele }}({{printer.localisation}}){% if not loop.last %}, {% endif %}
@@ -80,3 +80,25 @@
    {%endif%}
    <a href="{{ path('addcartridgepage') }}" class="btn btn-primary" ><span class="glyphicon glyphicon-plus"></span> Ajouter une Cartouche</a>
 {% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+<script>
+    $(function() {
+      $('tr').each(function(){
+
+        var quantite = $(this).attr("data-quantite");
+
+        if( quantite < 5 && quantite >= 3){
+                $(this).css('background-color', '#FAB861');
+            }
+
+            if( quantite <3){
+                $(this).css('background-color', '#F66060');
+            }
+
+
+      });
+    });
+    </script>
+  {% endblock %}
