@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+{%if printers %}
+<div class="tab-content">
+  <div id="printers" class="tab-pane fade in active">
+    <table class="table table-bordered table-striped table-condensed">
+   <caption>
+      <h4>Liste des Imprimantes en services</h4>
+   </caption>
+   <thead>
+      <tr>
+            <th>Marque</th>
+            <th>Modele</th>
+            <th>Localisation</th>
+            <th>Type</th>
+            <th>Adresse Ip</th>
+            <th>Date d'achat</th>
+            <th>garantie</th>
+      </tr>
+   </thead>
+   <tbody>
+   {% for printer in printers %}
+   <tr>
+    <td>{{printer.marque}}</td>
+    <td>{{printer.modele}}</td>
+    <td>{{printer.localisation}}</td>
+    <td>{{printer.type}}</td>
+    <td>{{printer.adresseip}}</td>
+    <td>{{printer.dateachat|date("m/d/Y")}}</td>
+    <td>{{printer.garantie}}</td>
+   </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+</div>
+{% else %}
+        <div class="panel panel-warning">
+      <div class="panel-heading">Information</div>
+      <div class="panel-body">Il n'y a pas d'imprimantes en service pour le moment</div>
+    </div>
+   {%endif%}
+{% endblock %}
