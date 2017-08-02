@@ -93,23 +93,26 @@ class CartridgeController extends Controller
         ]);
     }
 
-    /*
+    
+    /**
+     * @Route("/cartridge/delete/{id}", name="deletecartridgepage")
+     */
     public function deleteAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
         $repository = $this
             ->getDoctrine()
             ->getManager()
-            ->getRepository('AppBundle:Imprimante')
+            ->getRepository('AppBundle:Cartouche')
         ;
         
-        $printer = $repository->find($id);
+        $cartridge = $repository->find($id);
         
-        $em->remove($printer);
+        $em->remove($cartridge);
         $em->flush();
 
-        $request->getSession()->getFlashBag()->add('message', 'Imprimante mise a jour.');
+        $request->getSession()->getFlashBag()->add('message', 'supprimer.');
         
-        return $this->redirectToRoute('printerpage');
-    }*/
+        return $this->redirectToRoute('cartridgepage');
+    }
 }
