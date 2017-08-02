@@ -30,7 +30,7 @@
     <td>{% for printer in cartridge.printers %}
       {{ printer.modele }}{% if not loop.last %}, {% endif %}
     {% endfor %}</td>
-    <td>{{cartridge.statuscommande}}</td>
+    <td>{% if cartridge.statuscommande %} Commande en cours {% else %}{% endif%}</td>
     <td><a href="{{ path('editcartridgepage', { 'id': cartridge.id }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-edit"></span>
     </a>
     <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#cartridgeDialog{{ cartridge.id }}"><span class="glyphicon glyphicon-remove"></span>
@@ -52,8 +52,15 @@
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal -->
+                        {% if cartridge.statuscommande %}
+
+                        <a class="btn btn-info btn-xs" href="{{ path('cancelCommande', { 'id': cartridge.id }) }}" title="Commande"><span class="glyphicon glyphicon-shopping-cart"></span> Annuler la commande
+                        </a>
+
+                        {% else %}
                         <a class="btn btn-warning btn-xs" href="{{ path('commandecartridgepage', { 'id': cartridge.id }) }}" title="Commande"><span class="glyphicon glyphicon-shopping-cart"></span> Commander
                         </a>
+                        {% endif %}
     </td>
     
    </tr>

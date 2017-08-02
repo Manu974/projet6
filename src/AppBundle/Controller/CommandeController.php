@@ -20,13 +20,16 @@ class CommandeController extends Controller
     public function commandeAction(Request $request, $id)
     {
         $commande = new Commande();
-         $repository = $this
+        $repository = $this
             ->getDoctrine()
             ->getManager()
             ->getRepository('AppBundle:Cartouche')
         ;
 
         $cartridge = $repository->find($id);
+        $commande->setType($cartridge->getType());
+        $commande->setModele($cartridge->getModele());
+        $commande->setDatedelivraison(null);
 
         $form = $this->get('form.factory')->create(CommandeType::class, $commande);
 
@@ -46,14 +49,35 @@ class CommandeController extends Controller
             return $this->redirectToRoute('cartridgepage');
         }
 
-       
-        
-        
         // replace this example code with whatever you need
         return $this->render('commande/commande.html.twig', [
             "cartridge" => $cartridge,
             "form" => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/cartridge/commande/cancel/{id}", name="cancelCommande")
+     */
+    public function cancelAction(Request $request, $id)
+    {
+        $repositoryCommande = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('AppBundle:Commande')
+        ;
+
+        $commandes = $repositoryCommande->findBy(['cartouche' => $id]);
+
+        $em = $this->getDoctrine()->getManager();
+        foreach ($commandes as $commande) {
+            $commande->getCartouche()->setStatuscommande(false);
+            $em->remove($commande);
+        }
+       
+        $em->flush();
+        return $this->redirectToRoute('cartridgepage');
+
     }
 
 }

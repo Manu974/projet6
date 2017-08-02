@@ -52,7 +52,7 @@ class Commande
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="datedelivraison", type="datetime")
+     * @ORM\Column(name="datedelivraison", type="datetime", nullable=true)
      */
     private $datedelivraison;
 
@@ -64,7 +64,7 @@ class Commande
     private $statuscommande;
 
     /**
-    * @ORM\OneToOne(targetEntity="AppBundle\Entity\Cartouche", cascade={"persist"})
+    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Cartouche", cascade={"persist"})
     */
     private $cartouche;
 
