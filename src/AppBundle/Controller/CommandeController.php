@@ -20,16 +20,33 @@ class CommandeController extends Controller
     public function commandeAction(Request $request, $id)
     {
         $commande = new Commande();
-
-        $form = $this->get('form.factory')->create(CommandeType::class, $commande);
-
-        $repository = $this
+         $repository = $this
             ->getDoctrine()
             ->getManager()
             ->getRepository('AppBundle:Cartouche')
         ;
 
         $cartridge = $repository->find($id);
+
+        $form = $this->get('form.factory')->create(CommandeType::class, $commande);
+
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $cartridge->setStatuscommande(true);
+            $commande->setStatuscommande(false);
+            $commande->setCartouche($cartridge);
+
+            $em = $this->getDoctrine()->getManager();
+
+            $em->persist($commande);
+            $em->flush();
+
+            $request->getSession()->getFlashBag()->add('message', 'Commande enregistrée');
+
+            return $this->redirectToRoute('cartridgepage');
+        }
+
+       
         
         
         // replace this example code with whatever you need
