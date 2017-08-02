@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+
+{% block content %}
+<h3>Commande de cartouche pour Imprimante {{cartridge.marque}} modele {{cartridge.modele}}</h3>
+
+<div class="well">
+  {{ form(form) }}
+</div>
+
+{% endblock %}

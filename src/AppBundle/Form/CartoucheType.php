@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class CartoucheType extends AbstractType
 {
@@ -31,7 +32,12 @@ class CartoucheType extends AbstractType
             ->add('quantite', IntegerType::class)
             ->add('modele', TextType::class)
             ->add('reapprovisionnement', DateType::class)
-            ->add('printers')
+            ->add('printers', EntityType::class, [
+                'class'        => 'AppBundle:Imprimante',
+                'label'        => "Modele d'imprimante",
+                'choice_label' => 'modele',
+                'multiple'     => true,
+            ])
             ->add('save', SubmitType::class, [
                 'label' => 'Valider'
                 ])
