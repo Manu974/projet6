@@ -31,7 +31,6 @@ class CartoucheType extends AbstractType
                 ])
             ->add('quantite', IntegerType::class)
             ->add('modele', TextType::class)
-            ->add('reapprovisionnement', DateType::class)
             ->add('printers', EntityType::class, [
                 'class'        => 'AppBundle:Imprimante',
                 'label'        => "Modele d'imprimante",

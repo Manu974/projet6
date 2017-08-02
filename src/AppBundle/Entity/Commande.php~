@@ -52,7 +52,7 @@ class Commande
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="datedelivraison", type="datetime")
+     * @ORM\Column(name="datedelivraison", type="datetime", nullable=true)
      */
     private $datedelivraison;
 
@@ -64,12 +64,21 @@ class Commande
     private $statuscommande;
 
     /**
-    * @ORM\OneToOne(targetEntity="AppBundle\Entity\Cartouche", cascade={"persist"})
+    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Cartouche", cascade={"persist"})
     */
     private $cartouche;
 
 
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        
+        $this->datedecommande = new \DateTime('now');
+        $this->datedelivraison = new \DateTime('now');
+    }
+    
     /**
      * Get id
      *
@@ -223,5 +232,28 @@ class Commande
     {
         return $this->statuscommande;
     }
-}
 
+    /**
+     * Set cartouche
+     *
+     * @param \AppBundle\Entity\Cartouche $cartouche
+     *
+     * @return Commande
+     */
+    public function setCartouche(\AppBundle\Entity\Cartouche $cartouche = null)
+    {
+        $this->cartouche = $cartouche;
+
+        return $this;
+    }
+
+    /**
+     * Get cartouche
+     *
+     * @return \AppBundle\Entity\Cartouche
+     */
+    public function getCartouche()
+    {
+        return $this->cartouche;
+    }
+}
