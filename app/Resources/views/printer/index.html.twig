@@ -33,14 +33,17 @@
     <td>{{printer.dateachat|date("m/d/Y")}}</td>
     <td>{{printer.garantie}} ans</td>
     <td>Remplacée {{printer.black}} fois <a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'black' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
-    </a> <a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'black' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
-    </a></td>
+    </a>
+    {% if printer.black >= 1 %}<a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'black' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
+    </a>{% endif %}</td>
     <td>Remplacée {{printer.cyan}} fois<a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'cyan' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
-    </a> <a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'cyan' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
-    </a></td>
+    </a> 
+      {% if printer.cyan >= 1 %}<a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'cyan' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
+    </a>{% endif %}</td>
     <td>Remplacée {{printer.red}} fois<a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'red' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
-    </a> <a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'red' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
-    </a></td>
+    </a>
+     {% if printer.red >= 1 %}<a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'red' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
+    </a>{% endif %}</td>
     <td>
     <a href="{{ path('editprinterpage', { 'id': printer.id }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-edit"></span>
     </a>
