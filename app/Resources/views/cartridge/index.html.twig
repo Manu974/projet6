@@ -6,7 +6,7 @@
   <div id="cartridges" class="tab-pane fade in active">
     <table class="table table-bordered table-striped table-condensed">
    <caption>
-      <h4>Liste des Imprimantes en services</h4>
+      <h4>Cartouches en stock</h4>
    </caption>
    <thead>
       <tr>
@@ -44,5 +44,5 @@
       <div class="panel-body">Il n'y a pas de cartouche en stock</div>
     </div>
    {%endif%}
-   <a href="{{ path('addprinterpage') }}" class="btn btn-primary" ><span class="glyphicon glyphicon-print"></span> Ajouter une Imprimante</a>
+   <a href="{{ path('addcartridgepage') }}" class="btn btn-primary" ><span class="glyphicon glyphicon-print"></span> Ajouter une Imprimante</a>
 {% endblock %}
