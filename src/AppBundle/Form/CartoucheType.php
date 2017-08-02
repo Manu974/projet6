@@ -23,10 +23,12 @@ class CartoucheType extends AbstractType
             ->add('marque', TextType::class)
             ->add('type', ChoiceType::class, [
                  'choices'  => array(
-                        "Laser monochrome" => "Laser monochrome",
-                        "Laser couleur" => "Laser couleur",
-                        "Jet d'encre monochrome" => "Jet d'encre monochrome",
-                        "Jet d'encre couleur" => "Jet d'encre couleur",
+                        "Laser noir" => "Laser noir",
+                        "Laser rouge" => "Laser rouge",
+                        "Laser cyan" => "Laser cyan",
+                        "Jet d'encre noir" => "Jet d'encre noir",
+                        "Jet d'encre rouge" => "Jet d'encre rouge",
+                        "Jet d'encre cyan" => "Jet d'encre cyan",
                     ),
                 ])
             ->add('quantite', IntegerType::class)

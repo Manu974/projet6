@@ -24,6 +24,13 @@ class PrinterController extends Controller
 
         $printers = $repository->findAll();
 
+        /*foreach ($printers as $printer) {
+         if($printer->getBlack() >= 3){
+
+          $request->getSession()->getFlashBag()->add('info', 'Attention surconsommation de cartouche');
+         }
+        }*/
+
         // replace this example code with whatever you need
         return $this->render('printer/index.html.twig', [
             "printers" => $printers,
@@ -39,6 +46,9 @@ class PrinterController extends Controller
         $printer = new Imprimante();
 
         $form = $this->get('form.factory')->create(ImprimanteType::class, $printer);
+        $printer->setBlack(0);
+        $printer->setRed(0);
+        $printer->setCyan(0);
 
        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
           $em = $this->getDoctrine()->getManager();

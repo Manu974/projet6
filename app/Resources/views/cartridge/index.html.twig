@@ -21,11 +21,11 @@
    </thead>
    <tbody>
    {% for cartridge in cartridges %}
-   <tr>
+   <tr data-quantite={{cartridge.quantite}}>
     <td>{{cartridge.marque}}</td>
     <td>{{cartridge.modele}}</td>
     <td>{{cartridge.type}}</td>
-    <td>{{cartridge.quantite}}</td>
+    <td>{{cartridge.quantite}} {% if cartridge.quantite < 5 and cartridge.quantite >= 3  %}<span class=" glyphicon glyphicon-exclamation-sign"></span>{% endif%} {% if cartridge.quantite < 3 %}<span class="   glyphicon glyphicon-tint"></span>{% endif%}</td>
     <td>{% if cartridge.reapprovisionnement %}{{cartridge.reapprovisionnement|date("m/d/Y")}}{% else %} Pas d'ajout{% endif%}</td>
     <td>{% for printer in cartridge.printers %}
       {{ printer.modele }}({{printer.localisation}}){% if not loop.last %}, {% endif %}
@@ -79,4 +79,42 @@
     </div>
    {%endif%}
    <a href="{{ path('addcartridgepage') }}" class="btn btn-primary" ><span class="glyphicon glyphicon-plus"></span> Ajouter une Cartouche</a>
+
+    <ul class="list-group">
+ 
+   {% for cartridge in cartridges %}
+   {% if (cartridge.quantite < 5 and cartridge.quantite >= 3) or (cartridge.quantite < 3) %}
+   <h4 name="titreAlerte">{{cartridge.modele}} {{cartridge.type}}</h4>
+   {% endif %}
+   {% if cartridge.quantite < 5 and cartridge.quantite >= 3 %}
+
+  <li class="list-group-item list-group-item-warning">Attention Stock de Cartouche inférieur à 5</li>
+  {% endif %}
+  {% if cartridge.quantite < 3 %}
+  <li class="list-group-item list-group-item-danger">Attention Stock de Cartouche inférieur à 3, COMMANDE URGENTE</li>
+  {% endif %} 
+{% endfor%}
+      </ul>
 {% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+<script>
+    $(function() {
+      $('tr').each(function(){
+
+        var quantite = $(this).attr("data-quantite");
+
+        if( quantite < 5 && quantite >= 3){
+                $(this).css('background-color', '#FAB861');
+            }
+
+            if( quantite <3){
+                $(this).css('background-color', '#F66060');
+            }
+
+
+      });
+    });
+    </script>
+  {% endblock %}

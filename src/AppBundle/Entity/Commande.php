@@ -68,7 +68,6 @@ class Commande
     */
     private $cartouche;
 
-
     /**
      * Constructor
      */

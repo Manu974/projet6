@@ -25,7 +25,6 @@ class CartridgeController extends Controller
 
         $cartridges = $repository->findAll();
         
-        
         // replace this example code with whatever you need
         return $this->render('cartridge/index.html.twig', [
             "cartridges" => $cartridges,
@@ -41,6 +40,10 @@ class CartridgeController extends Controller
         $cartridge = new Cartouche();
         $cartridge->setStatuscommande(false);
         $cartridge->setReapprovisionnement(null);
+        $cartridge->setBlack(0);
+        $cartridge->setRed(0);
+        $cartridge->setCyan(0);
+
         $form = $this->get('form.factory')->create(CartoucheType::class, $cartridge);
 
           if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
