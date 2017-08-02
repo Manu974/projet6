@@ -26,9 +26,32 @@
     <td>{{printer.modele}}</td>
     <td>{{printer.localisation}}</td>
     <td>{{printer.type}}</td>
-    <td>{{printer.adresseip}}</td>
+    <td><a href="http://{{printer.adresseip}}">{{printer.adresseip}}</a></td>
     <td>{{printer.dateachat|date("m/d/Y")}}</td>
-    <td>{{printer.garantie}}</td>
+    <td>{{printer.garantie}} ans</td>
+    <td>
+    <a href="{{ path('editprinterpage', { 'id': printer.id }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-edit"></span>
+    </a>
+    <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#printerDialog{{ printer.id }}"><span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                        <div class="modal fade" id="printerDialog{{ printer.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title" id="myModalLabel">Confirmation nécessaire</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        Voulez-vous supprimer réellement cette imprimante ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                        <a href="{{ path('deleteprinterpage', { 'id': printer.id }) }}" class="btn btn-danger">Confirmer</a>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+    </td>
    </tr>
     {% endfor %}
     </tbody>
@@ -41,5 +64,5 @@
       <div class="panel-body">Il n'y a pas d'imprimantes en service pour le moment</div>
     </div>
    {%endif%}
-   <a href="{{ path('addprinterpage') }}">add Printers</a>
+   <a href="{{ path('addprinterpage') }}" class="btn btn-primary" ><span class="glyphicon glyphicon-print"></span> Ajouter une Imprimante</a>
 {% endblock %}
