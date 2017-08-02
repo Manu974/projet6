@@ -76,4 +76,26 @@ class CartridgeReplaceController extends Controller
         return $this->redirectToRoute('printerpage');
     }
 
+    /**
+     * @Route("/take/{id}/", name="takecartridge")
+     */
+    public function takeCartridgeAction(Request $request, $id)
+    {
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('AppBundle:Cartouche')
+        ;
+
+        $cartridge = $repository->find($id);
+
+        $cartridge->setQuantite($cartridge->getQuantite()-1);
+
+        $em = $this->getDoctrine()->getManager();
+          
+        $em->flush();
+
+        return $this->redirectToRoute('cartridgepage');
+    }
+
 }
