@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+{%if cartridges %}
+<div class="tab-content">
+  <div id="cartridges" class="tab-pane fade in active">
+    <table class="table table-bordered table-striped table-condensed">
+   <caption>
+      <h4>Liste des Imprimantes en services</h4>
+   </caption>
+   <thead>
+      <tr>
+            <th>Marque</th>
+            <th>Modele</th>
+            <th>Type</th>
+            <th>Quantite</th>
+            <th>Date de réapprovisionnement</th>
+            <th>Modele Imprimante</th>
+            <th>Status de commande</th>
+      </tr>
+   </thead>
+   <tbody>
+   {% for cartridge in cartridges %}
+   <tr>
+    <td>{{cartridge.marque}}</td>
+    <td>{{cartridge.modele}}</td>
+    <td>{{cartridge.type}}</td>
+    <td>{{cartridge.quantite}}</td>
+    <td>{{cartridge.reapprovisionnement|date("m/d/Y")}}</td>
+    <td>{% for printer in cartridge.printers %}
+      {{ printer.modele }}{% if not loop.last %}, {% endif %}
+    {% endfor %}</td>
+    <td>{{cartridge.statuscommande}}</td>
+    
+   </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+</div>
+{% else %}
+        <div class="panel panel-warning">
+      <div class="panel-heading">Information</div>
+      <div class="panel-body">Il n'y a pas de cartouche en stock</div>
+    </div>
+   {%endif%}
+   <a href="{{ path('addprinterpage') }}" class="btn btn-primary" ><span class="glyphicon glyphicon-print"></span> Ajouter une Imprimante</a>
+{% endblock %}
