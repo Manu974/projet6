@@ -70,6 +70,11 @@ class Imprimante
      */
     private $garantie;
 
+    public function __construct()
+    {
+    $this->dateachat = new \Datetime('now');
+    }
+
 
     /**
      * Get id
