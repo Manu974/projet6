@@ -58,3 +58,24 @@ background-color: lightgreen;
 .panel-body{
   padding: 0;
 }
+
+.btnLow {
+  background: #FE6F01;
+}
+
+.btnVeryLow {
+  background: #FB3737;
+}
+
+.btnSurconsommation{
+  background: #FE6F01;
+}
+
+.btnCommande{
+  background: #FE6F01;
+}
+
+.btn-group{
+  float: right;
+}
+

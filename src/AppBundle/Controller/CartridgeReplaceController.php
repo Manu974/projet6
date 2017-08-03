@@ -98,4 +98,26 @@ class CartridgeReplaceController extends Controller
         return $this->redirectToRoute('cartridgepage');
     }
 
+    /**
+     * @Route("/deposit/{id}/", name="depositcartridge")
+     */
+    public function depositCartridgeAction(Request $request, $id)
+    {
+        $repository = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('AppBundle:Cartouche')
+        ;
+
+        $cartridge = $repository->find($id);
+
+        $cartridge->setQuantite($cartridge->getQuantite()+1);
+
+        $em = $this->getDoctrine()->getManager();
+          
+        $em->flush();
+
+        return $this->redirectToRoute('cartridgepage');
+    }
+
 }

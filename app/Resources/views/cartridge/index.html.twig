@@ -4,11 +4,11 @@
 {%if cartridges %}
 <div class="tab-content">
   <div id="cartridges" class="tab-pane fade in active table-responsive">
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped table-hover">
    <caption>
       <h4>Cartouches en stock</h4>
    </caption>
-   <thead>
+   <thead> 
       <tr>
             <th>Marque</th>
             <th>Modele</th>
@@ -26,8 +26,8 @@
     <td>{{cartridge.marque}}</td>
     <td>{{cartridge.modele}}</td>
     <td>{{cartridge.type}}</td>
-    <td>{{cartridge.quantite}} {% if cartridge.quantite < 5 and cartridge.quantite >= 3  %}<span class=" glyphicon glyphicon-exclamation-sign"></span>{% endif%} {% if cartridge.quantite < 3 %}<span class="   glyphicon glyphicon-tint"></span>{% endif%}<a href="{{ path('takecartridge', { 'id': cartridge.id }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
-    </a></td>
+    <td>{{cartridge.quantite}} {% if cartridge.quantite < 5 and cartridge.quantite >= 3  %}<span class=" glyphicon glyphicon-exclamation-sign"></span>{% endif%} {% if cartridge.quantite < 3 %}<span class="   glyphicon glyphicon-tint"></span>{% endif%}<div class="btn-group"><a href="{{ path('takecartridge', { 'id': cartridge.id }) }}" class="btn btn-info btn-xs btnTakeCartridge" title="Edit"><span class="glyphicon glyphicon-minus"> <a href="{{ path('depositcartridge', { 'id': cartridge.id }) }}" class="btn btn-warning btn-xs btnDepositCartridge" title="Edit"><span class="glyphicon glyphicon-plus"></span>
+    </a></div></td>
     <td>{% if cartridge.reapprovisionnement %}{{cartridge.reapprovisionnement|date("m/d/Y")}}{% else %} Pas d'ajout{% endif%}</td>
     <td>{% for printer in cartridge.printers %}
       {{ printer.modele }}({{printer.localisation}}){% if not loop.last %}, {% endif %}
@@ -63,7 +63,7 @@
                         </a>
 
                         {% else %}
-                        <a class="btn btn-warning btn-xs" href="{{ path('commandecartridgepage', { 'id': cartridge.id }) }}" title="Commande"><span class="glyphicon glyphicon-shopping-cart"></span> Commander
+                        <a class="btn btn-warning btn-xs btnCommande" href="{{ path('commandecartridgepage', { 'id': cartridge.id }) }}" title="Commande"><span class="glyphicon glyphicon-shopping-cart"></span> Commander
                         </a>
                         {% endif %}
     </td>
