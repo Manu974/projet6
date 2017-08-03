@@ -22,3 +22,17 @@ body {
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+[class*="col-"] {
+  background-color: lightgreen;
+  border: 2px solid black;
+  border-radius: 6px;
+  line-height: 40px;
+  text-align: center;
+}
+
+.container {
+
+	margin-top: 10px;
+}
+

@@ -1,1 +1,36 @@
 {% extends 'base.html.twig' %}
+
+{% block content %}
+
+      <div class="row">
+        
+        <div class="col-lg-3">
+        <caption><h4>{{numberPrinters}} imprimante(s) en service</h4></caption>
+        <a href="{{ path('printerpage') }}"><span class="fa fa-print fa-3x"></span></a>
+        <div class="row">
+        {% set nbPrint = 0 %}
+        {% for printer in printers %}
+        	{% if (printer.black >=3) or (printer.cyan >=3) or (printer.red >=3) %}
+        	{% set nbPrint = nbPrint + 1  %}
+        	{% endif %}
+        {% endfor %}
+        {% if nbPrint > 0 %}
+        <a href="{{ path('printerpage') }}" class="btn btn-warning">Imprimante en surconsommation <span class="badge text-success">{{nbPrint}}</span></a>
+        {% endif %}
+        </div>
+        
+        </div>
+      
+        <div class="col-lg-8 col-lg-offset-1"> status stock cartouche</div>
+      </div>
+
+      <div class="row">
+        
+        <div class="col-lg-5">6 colonnes</div>
+      
+        <div class="col-lg-5 col-lg-offset-2">6 colonnes</div>
+      </div>
+
+{% endblock %}
+
+ 
