@@ -2,35 +2,94 @@
 
 {% block content %}
 
-      <div class="row">
-        
-        <div class="col-lg-3">
-        <caption><h4>{{numberPrinters}} imprimante(s) en service</h4></caption>
-        <a href="{{ path('printerpage') }}"><span class="fa fa-print fa-3x"></span></a>
-        <div class="row">
-        {% set nbPrint = 0 %}
-        {% for printer in printers %}
-        	{% if (printer.black >=3) or (printer.cyan >=3) or (printer.red >=3) %}
-        	{% set nbPrint = nbPrint + 1  %}
-        	{% endif %}
-        {% endfor %}
-        {% if nbPrint > 0 %}
-        <a href="{{ path('printerpage') }}" class="btn btn-warning">Imprimante en surconsommation <span class="badge text-success">{{nbPrint}}</span></a>
-        {% endif %}
-        </div>
-        
-        </div>
-      
-        <div class="col-lg-8 col-lg-offset-1"> status stock cartouche</div>
-      </div>
+<div class="row">
 
-      <div class="row">
-        
-        <div class="col-lg-5">6 colonnes</div>
-      
-        <div class="col-lg-5 col-lg-offset-2">6 colonnes</div>
-      </div>
+	<div class="col-lg-3" id="dashboardPrinter">
+	{% if printers %}
+		<caption>
+			<h4>{{numberPrinters}} imprimante(s) en service</h4>
+		</caption>
+		<a href="{{ path('printerpage') }}"><span class="fa fa-print fa-3x" id="buttonDashPrinter"></span></a>
+		<div class="row">
+			{% set nbPrint = 0 %}
+			{% for printer in printers %}
+				{% if (printer.black >=3) or (printer.cyan >=3) or (printer.red >=3) %}
+				{% set nbPrint = nbPrint + 1  %}
+			{% endif %}
+			{% endfor %}
+			{% if nbPrint > 0 %}
+				<a href="{{ path('printerpage') }}" class="btn btn-warning">Imprimante en surconsommation <span class="badge text-success">{{nbPrint}}</span></a>
+			{% endif %}
+		</div>
+	{% else %}
+		<caption>
+			<h4>Aucune imprimante en service</h4>
+		</caption>
+		<div class="row"><a href="{{ path('printerpage') }}"><span class="fa fa-print fa-3x" id="buttonDashPrinter"></span></a></div>
+		<div class="row"><a href="{{ path('addprinterpage') }}" class="btn btn-primary" ><span class="glyphicon glyphicon-print"></span> Ajouter une Imprimante</a></div>
+		
+		
+	{% endif %}
+	</div>
+
+	<div class="col-lg-8 col-lg-offset-1" id="dashboardCartouche"> 
+		<div class="row">
+				<div class="panel panel-default panel-table">
+			      <div class="panel-heading"><h4>Stock de cartouches</h4></div>
+			      <div class="panel-body">
+			      	<table class="table table-bordered table-striped">
+					    <thead>
+					      <tr>
+					      	<th>Marque</th>
+					        <th>Modele</th>
+					        <th>Quantite</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					    {% for cartridge in cartridges %}
+					      <tr data-quantite={{cartridge.quantite}}>
+					      	<td>{{cartridge.marque}}</td>
+					        <td>{{cartridge.modele}}</td>
+					        <td>{{cartridge.quantite}} {% if cartridge.quantite < 5 and cartridge.quantite >= 3  %} <span class=" glyphicon glyphicon-exclamation-sign"></span>{% endif%} {% if cartridge.quantite < 3 %} <span class="fa fa-exclamation-triangle"></span><span class="fa fa-exclamation-triangle"></span>{% endif%}</td>
+					      </tr>
+					      {% endfor %}
+					    </tbody>
+  					</table>
+			      </div>
+	    		</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+
+<div class="col-lg-5">6 colonnes</div>
+
+<div class="col-lg-5 col-lg-offset-2">6 colonnes</div>
+</div>
 
 {% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+<script>
+    $(function() {
+      $('tr').each(function(){
+
+        var quantite = $(this).attr("data-quantite");
+
+        if( quantite < 5 && quantite >= 3){
+                $(this).css('background-color', '#FAB861');
+            }
+
+            if( quantite <3){
+                $(this).css('background-color', '#F66060');
+            }
+
+
+      });
+    });
+    </script>
+  {% endblock %}
 
  

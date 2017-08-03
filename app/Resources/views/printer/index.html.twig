@@ -20,6 +20,7 @@
             <th>cartouche noir</th>
             <th>cartouche cyan</th>
             <th>cartouche rouge</th>
+            <th><em class="fa fa-cog"></em></th>
       </tr>
    </thead>
    <tbody>
@@ -45,9 +46,9 @@
      {% if printer.red >= 1 %}<a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'red' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
     </a>{% endif %}</td>
     <td>
-    <a href="{{ path('editprinterpage', { 'id': printer.id }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-edit"></span>
+    <a href="{{ path('editprinterpage', { 'id': printer.id }) }}" class="btn btn-info btn-xs" title="Edit"><em class="fa fa-pencil"></em>
     </a>
-    <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#printerDialog{{ printer.id }}"><span class="glyphicon glyphicon-remove"></span>
+    <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#printerDialog{{ printer.id }}"><em class="fa fa-trash"></em>
                         </button>
                         <div class="modal fade" id="printerDialog{{ printer.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">

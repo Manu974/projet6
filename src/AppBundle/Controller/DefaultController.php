@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Imprimante;
+use AppBundle\Entity\Cartouche;
 
 class DefaultController extends Controller
 {
@@ -15,19 +16,28 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-          $repository = $this
+          $repositoryImprimante = $this
             ->getDoctrine()
             ->getManager()
             ->getRepository('AppBundle:Imprimante')
         ;
 
-        $printers = $repository->findAll();
-        $numberPrinters = $repository->numberPrinters();
+        $repositoryCartouche = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('AppBundle:Cartouche')
+        ;
+
+        $printers = $repositoryImprimante->findAll();
+        $numberPrinters = $repositoryImprimante->numberPrinters();
+
+        $cartridges = $repositoryCartouche->findAll();
        
         // replace this example code with whatever you need
         return $this->render('home/index.html.twig', [
 
             "printers" => $printers,
+            "cartridges" => $cartridges,
             "numberPrinters" => $numberPrinters,
         ]);
     }
