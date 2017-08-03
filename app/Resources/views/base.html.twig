@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Gestion Service Informatique -{% block title %}{% endblock %}</title>
+  <title>Gestion Service Informatique - {% block title %}Accueil{% endblock %}</title>
 
 {% block stylesheets %}
     {# On charge le CSS de bootstrap depuis le site directement #}
@@ -26,11 +26,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span> 
       </button>
-      <a class="navbar-brand" href="#">Gestion Informatique</a>
+      <a class="navbar-brand" href="{{ path('homepage') }}">Gestion Informatique</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="{{ path('homepage') }}">Accueil</a></li>
+        <li class="active"><a href="{{ path('homepage') }}"><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp;Accueil</a></li>
         <li><a href="{{ path('printerpage') }}">Imprimante</a></li>
         <li><a href="{{ path('cartridgepage') }}">Cartouche</a></li> 
       </ul>
