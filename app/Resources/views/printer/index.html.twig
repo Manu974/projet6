@@ -4,7 +4,7 @@
 {%if printers %}
 <div class="tab-content">
   <div id="printers" class="tab-pane fade in active table-responsive">
-    <table class="table table-bordered table-striped ">
+    <table class="table table-bordered table-striped table-hover">
    <caption>
       <h4>Liste des Imprimantes en services</h4>
    </caption>
@@ -20,6 +20,7 @@
             <th>cartouche noir</th>
             <th>cartouche cyan</th>
             <th>cartouche rouge</th>
+            <th><em class="fa fa-cog"></em></th>
       </tr>
    </thead>
    <tbody>
@@ -32,22 +33,23 @@
     <td><a href="http://{{printer.adresseip}}">{{printer.adresseip}}</a></td>
     <td>{{printer.dateachat|date("m/d/Y")}}</td>
     <td>{{printer.garantie}} ans</td>
-    <td data-remplacement="{{printer.black}}">Remplacée {{printer.black}} fois <a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'black' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
+    <td data-remplacement="{{printer.black}}">Remplacée {{printer.black}} fois <div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'black' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
     </a>
     {% if printer.black >= 1 %}<a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'black' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
-    </a>{% endif %}</td>
-    <td data-remplacement="{{printer.cyan}}">Remplacée {{printer.cyan}} fois<a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'cyan' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
+    </a>{% endif %}</div></td>
+
+    <td data-remplacement="{{printer.cyan}}">Remplacée {{printer.cyan}} fois <div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'cyan' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
     </a> 
       {% if printer.cyan >= 1 %}<a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'cyan' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
-    </a>{% endif %}</td>
-    <td data-remplacement="{{printer.red}}">Remplacée {{printer.red}} fois<a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'red' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
+    </a>{% endif %}</div></td>
+    <td data-remplacement="{{printer.red}}">Remplacée {{printer.red}} fois <div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'red' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
     </a>
      {% if printer.red >= 1 %}<a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'red' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
-    </a>{% endif %}</td>
+    </a>{% endif %}</div></td>
     <td>
-    <a href="{{ path('editprinterpage', { 'id': printer.id }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-edit"></span>
+    <a href="{{ path('editprinterpage', { 'id': printer.id }) }}" class="btn btn-info btn-xs" title="Edit"><em class="fa fa-pencil"></em>
     </a>
-    <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#printerDialog{{ printer.id }}"><span class="glyphicon glyphicon-remove"></span>
+    <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#printerDialog{{ printer.id }}"><em class="fa fa-trash"></em>
                         </button>
                         <div class="modal fade" id="printerDialog{{ printer.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">

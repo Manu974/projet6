@@ -1,1 +1,120 @@
 {% extends 'base.html.twig' %}
+
+{% block content %}
+
+<div class="row">
+
+	<div class="col-lg-4" id="dashboardPrinter">
+	{% if printers %}
+		<caption>
+			<h4>{{numberPrinters}} imprimante(s) en service</h4>
+		</caption>
+		<a href="{{ path('printerpage') }}"><span class="fa fa-print fa-3x" id="buttonDashPrinter"></span></a>
+		<div class="row">
+			{% set nbPrint = 0 %}
+			{% for printer in printers %}
+				{% if (printer.black >=3) or (printer.cyan >=3) or (printer.red >=3) %}
+				{% set nbPrint = nbPrint + 1  %}
+			{% endif %}
+			{% endfor %}
+			{% if nbPrint > 0 %}
+				<a href="{{ path('printerpage') }}" class="btn btn-warning btnSurconsommation">Imprimante en surconsommation <span class="badge text-success">{{nbPrint}}</span></a>
+			{% endif %}
+		</div>
+	{% else %}
+		<caption>
+			<h4>Aucune imprimante en service</h4>
+		</caption>
+		<div class="row"><a href="{{ path('printerpage') }}"><span class="fa fa-print fa-3x" id="buttonDashPrinter"></span></a></div>
+		<div class="row"><a href="{{ path('addprinterpage') }}" class="btn btn-primary" ><span class="glyphicon glyphicon-print"></span> Ajouter une Imprimante</a></div>
+		
+	{% endif %}
+	</div>
+
+	<div class="col-lg-7 col-lg-offset-1" id="dashboardCartouche"> 
+		<div class="row">
+				<div class="panel panel-default panel-table">
+			      <div class="panel-heading"><h4>Stock de cartouches</h4></div>
+			      <div class="panel-body">
+			      <div class="table-responsive">
+			      	<table class="table table-bordered table-striped ">
+					    <thead>
+					      <tr>
+					      	<th>Marque</th>
+					        <th>Modele</th>
+					        <th>Quantite</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					    {% for cartridge in cartridges %}
+					      <tr data-quantite={{cartridge.quantite}}>
+					      	<td>{{cartridge.marque}}</td>
+					        <td>{{cartridge.modele}}</td>
+					        <td>{{cartridge.quantite}} {% if cartridge.quantite < 5 and cartridge.quantite >= 3  %} <span class=" glyphicon glyphicon-exclamation-sign"></span> <a href="{{ path('cartridgepage') }}" class="btn btn-warning btnLow">Niveau stock bas <span class="fa fa-chevron-right"></span></a>{% endif%} {% if cartridge.quantite < 3 %} <span class="fa fa-exclamation-triangle"></span><span class="fa fa-exclamation-triangle"></span> <a href="{{ path('cartridgepage') }}" class="btn btn-danger btnVeryLow">Niveau stock très bas <span class="fa fa-chevron-right"></a>{% endif%}</td>
+					      </tr>
+					      {% endfor %}
+					    </tbody>
+  					</table>
+			      </div>
+			      </div>
+	    		</div>
+
+		</div>
+	</div>
+</div>
+
+<div class="row">
+
+	<div class="col-lg-12" id="dashboardCommande">
+		<div class="row">
+		{% if commandes%}
+			<div class="panel panel-danger">
+			  <div class="panel-heading"><h4>Commande en cours</h4></div>
+			  <div class="panel-body">
+				   <ul class="list-group">
+				   {% for commande in commandes %}
+				  		<li class="list-group-item list-group-item-warning"> {{commande.quantite}} cartouche(s) {{commande.modele}}, en commande depuis le {{commande.datedecommande|date("m/d/Y")}} </li>
+				  	{% endfor %} 
+				   </ul>
+			  	
+			  </div>
+			</div>
+			{% else %}
+			<div class="panel panel-success">
+			  <div class="panel-heading"><h4>Aucune commande en cours</h4><span class="fa fa-check fa-2x"></span></div>
+			  </div>
+			{% endif %}
+		</div>
+	</div>
+
+	
+
+	
+
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+<script>
+    $(function() {
+      $('tr').each(function(){
+
+        var quantite = $(this).attr("data-quantite");
+
+        if( quantite < 5 && quantite >= 3){
+                $(this).css('background-color', '#FAB861');
+            }
+
+            if( quantite <3){
+                $(this).css('background-color', '#F66060');
+            }
+
+
+      });
+    });
+    </script>
+  {% endblock %}
+
+ 

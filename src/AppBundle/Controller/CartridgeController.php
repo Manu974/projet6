@@ -40,9 +40,7 @@ class CartridgeController extends Controller
         $cartridge = new Cartouche();
         $cartridge->setStatuscommande(false);
         $cartridge->setReapprovisionnement(null);
-        $cartridge->setBlack(0);
-        $cartridge->setRed(0);
-        $cartridge->setCyan(0);
+        
 
         $form = $this->get('form.factory')->create(CartoucheType::class, $cartridge);
 

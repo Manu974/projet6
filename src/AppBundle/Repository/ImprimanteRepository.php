@@ -10,4 +10,14 @@ namespace AppBundle\Repository;
  */
 class ImprimanteRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function numberPrinters()
+	{
+		 return (int) $this
+    ->createQueryBuilder('a')
+    ->select('COUNT(a.id)')
+    ->getQuery()
+    ->getSingleScalarResult()
+  	;
+
+	}
 }
