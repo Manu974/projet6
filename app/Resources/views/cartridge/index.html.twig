@@ -90,10 +90,11 @@
    {% endif %}
    {% if cartridge.quantite < 5 and cartridge.quantite >= 3 %}
 
-  <li class="list-group-item list-group-item-warning">Attention Stock de Cartouche inférieur à 5</li>
+  <li class="list-group-item list-group-item-warning">Attention Stock de Cartouche inférieur à 5 {% if cartridge.statuscommande %}<p><span class="label label-success">Commande en cours...</span></p>{% endif %}</li>
+
   {% endif %}
   {% if cartridge.quantite < 3 %}
-  <li class="list-group-item list-group-item-danger">Attention Stock de Cartouche inférieur à 3, COMMANDE URGENTE</li>
+  <li class="list-group-item list-group-item-danger">Attention Stock de Cartouche inférieur à 3, COMMANDE URGENTE {% if cartridge.statuscommande %}<p><span class="label label-success">Commande en cours...</span></p>{% endif %}</li>
   {% endif %} 
 {% endfor%}
       </ul>

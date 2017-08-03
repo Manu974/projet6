@@ -8,8 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Imprimante;
 use AppBundle\Entity\Cartouche;
+use AppBundle\Entity\Commande;
 
-class DefaultController extends Controller
+class HomeController extends Controller
 {
     /**
      * @Route("/", name="homepage")
@@ -28,10 +29,18 @@ class DefaultController extends Controller
             ->getRepository('AppBundle:Cartouche')
         ;
 
+        $repositoryCommande = $this
+            ->getDoctrine()
+            ->getManager()
+            ->getRepository('AppBundle:Commande')
+        ;
+
         $printers = $repositoryImprimante->findAll();
         $numberPrinters = $repositoryImprimante->numberPrinters();
 
         $cartridges = $repositoryCartouche->findAll();
+
+        $commandes = $repositoryCommande->findAll();
        
         // replace this example code with whatever you need
         return $this->render('home/index.html.twig', [
@@ -39,6 +48,7 @@ class DefaultController extends Controller
             "printers" => $printers,
             "cartridges" => $cartridges,
             "numberPrinters" => $numberPrinters,
+            "commandes" => $commandes,
         ]);
     }
 }

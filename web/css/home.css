@@ -21,7 +21,7 @@ body {
 
 
 #dashboardPrinter {
-  background-color: lightgreen;
+ 
   border: 2px inset black;
   border-radius: 5px;
   line-height: 40px;
@@ -40,7 +40,17 @@ body {
 }
 
 #dashboardCartouche{
-background-color: lightgreen;
+background-color: #EDF1F5;
+  border: 2px inset black;
+  border-radius: 5px;
+  line-height: 40px;
+  text-align: center;
+   box-shadow: 4px 4px 8px black;
+}
+
+#dashboardCommande{
+  margin-top: 10px;
+background-color: #EDF1F5;
   border: 2px inset black;
   border-radius: 5px;
   line-height: 40px;

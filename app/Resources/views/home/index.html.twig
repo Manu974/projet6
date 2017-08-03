@@ -4,7 +4,7 @@
 
 <div class="row">
 
-	<div class="col-lg-3" id="dashboardPrinter">
+	<div class="col-lg-4" id="dashboardPrinter">
 	{% if printers %}
 		<caption>
 			<h4>{{numberPrinters}} imprimante(s) en service</h4>
@@ -28,16 +28,16 @@
 		<div class="row"><a href="{{ path('printerpage') }}"><span class="fa fa-print fa-3x" id="buttonDashPrinter"></span></a></div>
 		<div class="row"><a href="{{ path('addprinterpage') }}" class="btn btn-primary" ><span class="glyphicon glyphicon-print"></span> Ajouter une Imprimante</a></div>
 		
-		
 	{% endif %}
 	</div>
 
-	<div class="col-lg-8 col-lg-offset-1" id="dashboardCartouche"> 
+	<div class="col-lg-7 col-lg-offset-1" id="dashboardCartouche"> 
 		<div class="row">
 				<div class="panel panel-default panel-table">
 			      <div class="panel-heading"><h4>Stock de cartouches</h4></div>
 			      <div class="panel-body">
-			      	<table class="table table-bordered table-striped">
+			      <div class="table-responsive">
+			      	<table class="table table-bordered table-striped ">
 					    <thead>
 					      <tr>
 					      	<th>Marque</th>
@@ -56,16 +56,41 @@
 					    </tbody>
   					</table>
 			      </div>
+			      </div>
 	    		</div>
+
 		</div>
 	</div>
 </div>
 
 <div class="row">
 
-<div class="col-lg-5">6 colonnes</div>
+	<div class="col-lg-12" id="dashboardCommande">
+		<div class="row">
+		{% if commandes%}
+			<div class="panel panel-danger">
+			  <div class="panel-heading"><h4>Commande en cours</h4></div>
+			  <div class="panel-body">
+				   <ul class="list-group">
+				   {% for commande in commandes %}
+				  		<li class="list-group-item list-group-item-warning"> {{commande.quantite}} cartouche(s) {{commande.modele}}, en commande depuis le {{commande.datedecommande|date("m/d/Y")}} </li>
+				  	{% endfor %} 
+				   </ul>
+			  	
+			  </div>
+			</div>
+			{% else %}
+			<div class="panel panel-success">
+			  <div class="panel-heading"><h4>Aucune commande en cours</h4><span class="fa fa-check fa-2x"></span></div>
+			  </div>
+			{% endif %}
+		</div>
+	</div>
 
-<div class="col-lg-5 col-lg-offset-2">6 colonnes</div>
+	
+
+	
+
 </div>
 
 {% endblock %}
