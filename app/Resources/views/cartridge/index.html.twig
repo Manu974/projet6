@@ -1,7 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-{%if cartridges %}
+<div class="row">
+  {%if cartridges %}
 <div class="tab-content">
   <div id="cartridges" class="tab-pane fade in active table-responsive">
     <table class="table table-bordered table-striped table-hover">
@@ -80,24 +81,39 @@
       <div class="panel-body">Il n'y a pas de cartouche en stock</div>
     </div>
    {%endif%}
+</div>
+<div class="row" id="ajoutCartouche">
    <a href="{{ path('addcartridgepage') }}" class="btn btn-primary" ><span class="glyphicon glyphicon-plus"></span> Ajouter une Cartouche</a>
+</div>
 
-    <ul class="list-group">
+
+  <div class="row">
+    <div id="listCartridge" >
+{% for cartridge in cartridges %}
+{% if (cartridge.quantite < 5 and cartridge.quantite >= 3) or (cartridge.quantite < 3) %}
+  <ul class="list-group">
  
-   {% for cartridge in cartridges %}
-   {% if (cartridge.quantite < 5 and cartridge.quantite >= 3) or (cartridge.quantite < 3) %}
-   <h4 name="titreAlerte">{{cartridge.modele}} {{cartridge.type}}</h4>
-   {% endif %}
-   {% if cartridge.quantite < 5 and cartridge.quantite >= 3 %}
+   <div class="panel panel-cartridge">
+  <div class="panel-heading"><h4 name="titreAlerte" class="headingWarningPrinters">{{cartridge.modele}} {{cartridge.type}}</h4><span class="fa fa-exclamation-triangle warningCartridges"></div>
+  <div class="panel-body"> {% if cartridge.quantite < 5 and cartridge.quantite >= 3 %}
 
-  <li class="list-group-item list-group-item-warning">Attention Stock de Cartouche inférieur à 5 {% if cartridge.statuscommande %}<p><span class="label label-success">Commande en cours...</span></p>{% endif %}</li>
+  <li class="list-group-item ">Attention Stock de Cartouche inférieur à 5 {% if cartridge.statuscommande %}<p><span class="label label-success">Commande en cours...</span></p>{% endif %}</li>
 
   {% endif %}
   {% if cartridge.quantite < 3 %}
   <li class="list-group-item list-group-item-danger">Attention Stock de Cartouche inférieur à 3, COMMANDE URGENTE {% if cartridge.statuscommande %}<p><span class="label label-success">Commande en cours...</span></p>{% endif %}</li>
-  {% endif %} 
-{% endfor%}
-      </ul>
+  {% endif %} </div>
+</div>
+</ul>
+       {% endif %}
+    {% endfor%}
+</div>
+
+  </div>
+
+
+<div id="page_navigation"> </div>
+    
 {% endblock %}
 
 {% block javascripts %}
@@ -120,4 +136,58 @@
       });
     });
     </script>
+
+    <script> 
+
+    var show_per_page = 2; 
+    var current_page = 0;
+
+    function set_display(first, last) {
+      $('#listCartridge').children().css('display', 'none');
+      $('#listCartridge').children().slice(first, last).css('display', 'block');
+    }
+
+    function previous(){
+        if($('.active').prev('.page_link').length) go_to_page(current_page - 1);
+    }
+
+    function next(){
+        if($('.active').next('.page_link').length) go_to_page(current_page + 1);
+    }
+
+    function go_to_page(page_num){
+      current_page = page_num;
+      start_from = current_page * show_per_page;
+      end_on = start_from + show_per_page;
+      set_display(start_from, end_on);
+      $('.active').removeClass('active');
+      if($('#cartridges')){
+        $('#cartridges').addClass('active');
+      }
+
+      
+      $('#id' + page_num).addClass('active');
+    }  
+
+    $(document).ready(function() {
+
+      var number_of_pages = Math.ceil($('#listCartridge').children().length / show_per_page);
+
+      var nav = '<ul class="pagination"><li><a href="javascript:previous();">&laquo;</a>';
+
+      var i = -1;
+      while(number_of_pages > ++i){
+        nav += '<li class="page_link'
+        if(!i) nav += ' active';
+        nav += '" id="id' + i +'">';
+        nav += '<a href="javascript:go_to_page(' + i +')">'+ (i + 1) +'</a>';
+      }
+      nav += '<li><a href="javascript:next();">&raquo;</a></ul>';
+
+      $('#page_navigation').html(nav);
+      set_display(0, show_per_page);
+      
+    });
+
+  </script>
   {% endblock %}

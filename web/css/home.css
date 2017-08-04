@@ -89,16 +89,20 @@ background-color: #EDF1F5;
   float: right;
 }
 
-.warningPrinters{
+.warningPrinters, .warningCartridges {
   display: inline-block;
   float: right;
 }
-.headingWarningPrinters{
+.headingWarningPrinters, .headingWarningCartridges{
   width: 50%;
   display: inline-block;
 }
 
-#ajoutImprimante{
+#ajoutImprimante, #ajoutCartouche{
   margin-bottom: 10px;
+}
+
+.panel-cartridge, .panel-printer{
+  background: #FFE478;
 }
 

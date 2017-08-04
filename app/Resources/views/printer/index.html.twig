@@ -89,11 +89,11 @@
 </div>
 
 <div class="row">
-    <div id="listCommande" >
+    <div id="listPrinter" >
   {% for printer in printers %}
   {% if (printer.black >=3) or (printer.red >=3) or (printer.cyan >=3)  %}
   <ul class="list-group">
-  <div class="panel panel-warning">
+  <div class="panel panel-printer">
   <div class="panel-heading"><h4 name="titreAlerte" class="headingWarningPrinters">{{printer.marque}} {{printer.modele}} en {{printer.localisation}} </h4><span class="fa fa-exclamation-triangle warningPrinters"></div>
   <div class="panel-body"> {% if printer.black >=3 %}
 
@@ -143,8 +143,8 @@
     var current_page = 0;
 
     function set_display(first, last) {
-      $('#listCommande').children().css('display', 'none');
-      $('#listCommande').children().slice(first, last).css('display', 'block');
+      $('#listPrinter').children().css('display', 'none');
+      $('#listPrinter').children().slice(first, last).css('display', 'block');
     }
 
     function previous(){
@@ -161,14 +161,17 @@
       end_on = start_from + show_per_page;
       set_display(start_from, end_on);
       $('.active').removeClass('active');
-      $('#printers').addClass('active');
+      if($('#printers')){
+        $('#printers').addClass('active');
+      }
+
+      
       $('#id' + page_num).addClass('active');
     }  
 
     $(document).ready(function() {
 
-      console.log($('#listCommande').children().length);
-      var number_of_pages = Math.ceil($('#listCommande').children().length / show_per_page);
+      var number_of_pages = Math.ceil($('#listPrinter').children().length / show_per_page);
 
       var nav = '<ul class="pagination"><li><a href="javascript:previous();">&laquo;</a>';
 
