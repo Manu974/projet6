@@ -143,8 +143,16 @@
     var current_page = 0;
 
     function set_display(first, last) {
-      $('#listPrinter').children().css('display', 'none');
+      if($('#listPrinter')){
+        $('#listPrinter').children().css('display', 'none');
       $('#listPrinter').children().slice(first, last).css('display', 'block');
+      }
+
+       if($('#listCartridge')){
+        $('#listCartridge').children().css('display', 'none');
+      $('#listCartridge').children().slice(first, last).css('display', 'block');
+      }
+      
     }
 
     function previous(){
@@ -165,13 +173,24 @@
         $('#printers').addClass('active');
       }
 
+      if($('#cartridges')){
+        $('#cartridges').addClass('active');
+      }
+
       
       $('#id' + page_num).addClass('active');
     }  
 
     $(document).ready(function() {
+      var number_of_pages = 0;
+      if($('#listPrinter')){
+        number_of_pages = Math.ceil($('#listPrinter').children().length / show_per_page);
+      }
 
-      var number_of_pages = Math.ceil($('#listPrinter').children().length / show_per_page);
+      else if($('#listCartridge')){
+        
+       number_of_pages = Math.ceil($('#listCartridge').children().length / show_per_page);
+      }
 
       var nav = '<ul class="pagination"><li><a href="javascript:previous();">&laquo;</a>';
 

@@ -139,12 +139,20 @@
 
     <script> 
 
-    var show_per_page = 2; 
+    var show_per_page = 3; 
     var current_page = 0;
 
     function set_display(first, last) {
-      $('#listCartridge').children().css('display', 'none');
+      if($('#listCartridge')){
+        $('#listCartridge').children().css('display', 'none');
       $('#listCartridge').children().slice(first, last).css('display', 'block');
+      }
+
+      if($('#listPrinter')){
+        $('#listPrinter').children().css('display', 'none');
+      $('#listPrinter').children().slice(first, last).css('display', 'block');
+      }
+      
     }
 
     function previous(){
@@ -161,8 +169,13 @@
       end_on = start_from + show_per_page;
       set_display(start_from, end_on);
       $('.active').removeClass('active');
+
       if($('#cartridges')){
         $('#cartridges').addClass('active');
+      }
+
+      if($('#printers')){
+        $('#printers').addClass('active');
       }
 
       
@@ -170,8 +183,15 @@
     }  
 
     $(document).ready(function() {
+      var number_of_pages = 0;
+      if($('#listCartridge')){
 
-      var number_of_pages = Math.ceil($('#listCartridge').children().length / show_per_page);
+       number_of_pages = Math.ceil($('#listCartridge').children().length / show_per_page);
+      }
+
+      else if($('#listPrinter')){
+        number_of_pages = Math.ceil($('#listPrinter').children().length / show_per_page);
+      }
 
       var nav = '<ul class="pagination"><li><a href="javascript:previous();">&laquo;</a>';
 
