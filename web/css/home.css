@@ -89,3 +89,16 @@ background-color: #EDF1F5;
   float: right;
 }
 
+.warningPrinters{
+  display: inline-block;
+  float: right;
+}
+.headingWarningPrinters{
+  width: 50%;
+  display: inline-block;
+}
+
+#ajoutImprimante{
+  margin-bottom: 10px;
+}
+

@@ -1,7 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-{%if printers %}
+<div class="row">
+  {%if printers %}
 <div class="tab-content">
   <div id="printers" class="tab-pane fade in active table-responsive">
     <table class="table table-bordered table-striped table-hover">
@@ -81,16 +82,20 @@
       <div class="panel-body">Il n'y a pas d'imprimantes en service pour le moment</div>
     </div>
    {%endif%}
+</div>
+
+<div class="row" id="ajoutImprimante">
    <a href="{{ path('addprinterpage') }}" class="btn btn-primary" ><span class="glyphicon glyphicon-print"></span> Ajouter une Imprimante</a>
-  <div id="content-list">
+</div>
+
+<div class="row">
+    <div id="listCommande" >
   {% for printer in printers %}
+  {% if (printer.black >=3) or (printer.red >=3) or (printer.cyan >=3)  %}
   <ul class="list-group">
- 
-   
-   {% if (printer.black >=3) or (printer.red >=3) or (printer.cyan >=3)  %}
-   <h4 name="titreAlerte">{{printer.marque}} {{printer.modele}} en {{printer.localisation}} </h4>
-   {% endif %}
-   {% if printer.black >=3 %}
+  <div class="panel panel-warning">
+  <div class="panel-heading"><h4 name="titreAlerte" class="headingWarningPrinters">{{printer.marque}} {{printer.modele}} en {{printer.localisation}} </h4><span class="fa fa-exclamation-triangle warningPrinters"></div>
+  <div class="panel-body"> {% if printer.black >=3 %}
 
   <li class="list-group-item list-group-item-danger">Surconsommation de cartouche NOIR</li>
   {% endif %}
@@ -99,11 +104,21 @@
   {% endif %}
   {% if printer.cyan >=3 %}
   <li class="list-group-item list-group-item-danger">Surconsommation de cartouche BLEU</li>
-  {% endif %}
-      </ul>
+  {% endif %}</div>
+</div>
+</ul>
+      {% endif %}
       {% endfor%}
       </div>
-     <div id="page_navigation"> </div>
+</div>
+
+<div class="row">
+  <div id="page_navigation"> </div>
+</div>
+
+  
+
+     
 {% endblock %}
 
 {% block javascripts %}
@@ -124,12 +139,12 @@
 
     <script> 
 
-    var show_per_page = 2; 
+    var show_per_page = 3; 
     var current_page = 0;
 
     function set_display(first, last) {
-      $('#content-list').children().css('display', 'none');
-      $('#content-list').children().slice(first, last).css('display', 'block');
+      $('#listCommande').children().css('display', 'none');
+      $('#listCommande').children().slice(first, last).css('display', 'block');
     }
 
     function previous(){
@@ -146,13 +161,14 @@
       end_on = start_from + show_per_page;
       set_display(start_from, end_on);
       $('.active').removeClass('active');
+      $('#printers').addClass('active');
       $('#id' + page_num).addClass('active');
     }  
 
     $(document).ready(function() {
 
-      
-      var number_of_pages = Math.ceil($('#content-list').children().length / show_per_page);
+      console.log($('#listCommande').children().length);
+      var number_of_pages = Math.ceil($('#listCommande').children().length / show_per_page);
 
       var nav = '<ul class="pagination"><li><a href="javascript:previous();">&laquo;</a>';
 
