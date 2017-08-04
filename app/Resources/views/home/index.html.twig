@@ -37,7 +37,7 @@
 			      <div class="panel-heading"><h4>Stock de cartouches</h4></div>
 			      <div class="panel-body">
 			      <div class="table-responsive">
-			      	<table class="table table-bordered table-striped ">
+			      	<table class="table table-bordered table-striped " id="tablePrinterHome">
 					    <thead>
 					      <tr>
 					      	<th>Marque</th>
@@ -73,7 +73,12 @@
 			  <div class="panel-body">
 				   <ul class="list-group">
 				   {% for commande in commandes %}
-				  		<li class="list-group-item list-group-item-warning"> {{commande.quantite}} cartouche(s) {{commande.modele}}, en commande depuis le {{commande.datedecommande|date("m/d/Y")}} </li>
+				  		<li class="list-group-item list-group-item-warning"> {{commande.quantite}} cartouche(s) {{commande.modele}}, en commande depuis le {{commande.datedecommande|date("m/d/Y")}} <a class="btn btn-info btn-xs" href="{{ path('cancelCommande', { 'id': commande.cartouche.id }) }}" title="Commande"><span class="glyphicon glyphicon-shopping-cart"></span> Annuler la commande
+                        </a>
+
+                        <a class="btn btn-success btn-xs" href="{{ path('validCommande', { 'id': commande.cartouche.id}) }}" title="Commande"><span class="glyphicon glyphicon-shopping-cart"></span> Valider la Réception
+                        </a> </li>
+				  		
 				  	{% endfor %} 
 				   </ul>
 			  	
@@ -86,11 +91,6 @@
 			{% endif %}
 		</div>
 	</div>
-
-	
-
-	
-
 </div>
 
 {% endblock %}
@@ -115,6 +115,29 @@
       });
     });
     </script>
+
+    <script type="text/javascript">
+     $(document).ready( function () {
+    $('#tablePrinterHome').DataTable({
+      "language": {
+            "lengthMenu": "Afficher _MENU_ cartouches par tableau",
+            "zeroRecords": "Aucune cartouche en stock",
+            "info": "Cartouche de _START_ à _END_ sur _TOTAL_ cartouches",
+            "infoEmpty": "No records available",
+            "search":         "Rechercher:",
+            "infoFiltered": "( Filtré sur _MAX_ cartouches au total)",
+            "paginate": {
+                "first":      "Début",
+                "last":       "Fin",
+                "next":       "Suivant",
+                "previous":   "Précédent"
+              }
+        },
+
+        "lengthMenu": [ 5, 10]
+    });
+} );
+   </script>
   {% endblock %}
 
  
