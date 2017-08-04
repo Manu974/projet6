@@ -5,10 +5,8 @@
   {%if printers %}
 <div class="tab-content">
   <div id="printers" class="tab-pane fade in active table-responsive">
-    <table class="table table-bordered table-striped table-hover">
-   <caption>
-      <h4>Liste des Imprimantes en services</h4>
-   </caption>
+  <h4>Liste des Imprimantes en services</h4>
+    <table class="table table-bordered table-striped table-hover" id="tablePrinter">
    <thead>
       <tr>
             <th>Marque</th>
@@ -209,6 +207,29 @@
     });
 
   </script>
+
+  <script type="text/javascript">
+     $(document).ready( function () {
+    $('#tablePrinter').DataTable({
+       "language": {
+            "lengthMenu": "Afficher _MENU_ imprimantes par tableau",
+            "zeroRecords": "Aucune imprimante en stock",
+            "info": "Imprimante de _START_ à _END_ sur _TOTAL_ imprimantes",
+            "infoEmpty": "No records available",
+            "search":         "Rechercher:",
+            "infoFiltered": "( Filtré sur _MAX_ imprimantes au total)",
+            "paginate": {
+                "first":      "Début",
+                "last":       "Fin",
+                "next":       "Suivant",
+                "previous":   "Précédent"
+              }
+        },
+
+        "lengthMenu": [ 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100 ]
+    });
+} );
+   </script>
   {% endblock %}
 
 
