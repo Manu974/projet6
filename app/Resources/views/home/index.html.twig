@@ -73,7 +73,12 @@
 			  <div class="panel-body">
 				   <ul class="list-group">
 				   {% for commande in commandes %}
-				  		<li class="list-group-item list-group-item-warning"> {{commande.quantite}} cartouche(s) {{commande.modele}}, en commande depuis le {{commande.datedecommande|date("m/d/Y")}} </li>
+				  		<li class="list-group-item list-group-item-warning"> {{commande.quantite}} cartouche(s) {{commande.modele}}, en commande depuis le {{commande.datedecommande|date("m/d/Y")}} <a class="btn btn-info btn-xs" href="{{ path('cancelCommande', { 'id': commande.cartouche.id }) }}" title="Commande"><span class="glyphicon glyphicon-shopping-cart"></span> Annuler la commande
+                        </a>
+
+                        <a class="btn btn-success btn-xs" href="{{ path('validCommande', { 'id': commande.cartouche.id}) }}" title="Commande"><span class="glyphicon glyphicon-shopping-cart"></span> Valider la Réception
+                        </a> </li>
+				  		
 				  	{% endfor %} 
 				   </ul>
 			  	
@@ -86,11 +91,6 @@
 			{% endif %}
 		</div>
 	</div>
-
-	
-
-	
-
 </div>
 
 {% endblock %}

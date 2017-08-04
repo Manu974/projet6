@@ -5,10 +5,8 @@
   {%if cartridges %}
 <div class="tab-content">
   <div id="cartridges" class="tab-pane fade in active table-responsive">
-    <table class="table table-bordered table-striped table-hover">
-   <caption>
-      <h4>Cartouches en stock</h4>
-   </caption>
+  <h4>Cartouches en stock</h4>
+    <table class="table table-bordered table-striped table-hover" id="tableCartridge">
    <thead> 
       <tr>
             <th>Marque</th>
@@ -21,7 +19,9 @@
             <th><em class="fa fa-cog"></em></th>
       </tr>
    </thead>
-   <tbody>
+  
+   
+   <tbody id="tabCartridge">
    {% for cartridge in cartridges %}
    <tr data-quantite={{cartridge.quantite}}>
     <td>{{cartridge.marque}}</td>
@@ -72,7 +72,10 @@
    </tr>
     {% endfor %}
     </tbody>
+    
+    
 </table>
+<div id="paging-first-datatable"></div>
 </div>
 </div>
 {% else %}
@@ -134,10 +137,14 @@
 
 
       });
+     
+
+
+
+
     });
     </script>
-
-    <script> 
+<script> 
 
     var show_per_page = 3; 
     var current_page = 0;
@@ -210,4 +217,14 @@
     });
 
   </script>
+    
+   <script type="text/javascript">
+     $(document).ready( function () {
+    $('#tableCartridge').DataTable({
+      
+    });
+} );
+   </script>
+
+  
   {% endblock %}
