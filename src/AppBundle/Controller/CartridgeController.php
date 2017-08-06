@@ -9,11 +9,13 @@ use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Cartouche;
 use AppBundle\Entity\Imprimante;
 use AppBundle\Form\CartoucheType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class CartridgeController extends Controller
 {
     /**
      * @Route("/cartridge", name="cartridgepage")
+     * @Security("has_role('ROLE_USER')")
      */
     public function indexAction(Request $request)
     {
@@ -34,6 +36,7 @@ class CartridgeController extends Controller
 
     /**
      * @Route("/cartridge/add", name="addcartridgepage")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function addAction(Request $request)
     {
@@ -65,6 +68,7 @@ class CartridgeController extends Controller
 
      /**
      * @Route("/cartridge/edit/{id}", name="editcartridgepage")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function editAction(Request $request, $id)
     {
@@ -98,6 +102,7 @@ class CartridgeController extends Controller
     
     /**
      * @Route("/cartridge/delete/{id}", name="deletecartridgepage")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction(Request $request, $id)
     {

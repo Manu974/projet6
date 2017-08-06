@@ -9,11 +9,13 @@ use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Cartouche;
 use AppBundle\Entity\Imprimante;
 use AppBundle\Form\CartoucheType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class CartridgeReplaceController extends Controller
 {
     /**
      * @Route("/replace/{id}/{slug}", name="cartridgereplace")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function replaceAction(Request $request, $id, $slug)
     {
@@ -46,6 +48,7 @@ class CartridgeReplaceController extends Controller
 
     /**
      * @Route("/replaceback/{id}/{slug}", name="cartridgereplaceback")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function replaceBackAction(Request $request, $id, $slug)
     {
@@ -78,6 +81,7 @@ class CartridgeReplaceController extends Controller
 
     /**
      * @Route("/take/{id}/", name="takecartridge")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function takeCartridgeAction(Request $request, $id)
     {
@@ -100,6 +104,7 @@ class CartridgeReplaceController extends Controller
 
     /**
      * @Route("/deposit/{id}/", name="depositcartridge")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function depositCartridgeAction(Request $request, $id)
     {

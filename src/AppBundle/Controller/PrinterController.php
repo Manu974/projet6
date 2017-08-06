@@ -8,11 +8,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Imprimante;
 use AppBundle\Form\ImprimanteType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class PrinterController extends Controller
 {
     /**
      * @Route("/printer", name="printerpage")
+     * @Security("has_role('ROLE_USER')")
      */
     public function indexAction(Request $request)
     {
@@ -40,6 +42,7 @@ class PrinterController extends Controller
 
     /**
      * @Route("/printer/add", name="addprinterpage")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function addAction(Request $request)
     {
@@ -69,6 +72,7 @@ class PrinterController extends Controller
 
     /**
      * @Route("/printer/edit/{id}", name="editprinterpage")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function editAction(Request $request, $id)
     {
@@ -101,6 +105,7 @@ class PrinterController extends Controller
 
     /**
      * @Route("/printer/delete/{id}", name="deleteprinterpage")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction(Request $request, $id)
     {
