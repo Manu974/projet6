@@ -42,6 +42,9 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <!--<li><a href=""><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>-->
+        {% if app.user and is_granted('ROLE_ADMIN') %}
+        <li class="{% if adminMenu is defined %}active{% endif %}"><a href="admin"><span class="glyphicon glyphicon-cog"></span> Administration</a></li>
+        {% endif %}
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
         <li><a>Connecté en tant que <strong>{{ app.user.username }}</strong> <span class="glyphicon glyphicon-user"></span></a></li>
         <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Deconnexion</a></li>  
