@@ -9,8 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Imprimante;
 use AppBundle\Entity\Cartouche;
 use AppBundle\Entity\Commande;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use AppBundle\Entity\User;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use AppBundle\Form\RegistrationType;
 class AdminController extends Controller
 {
     /**
@@ -37,12 +39,26 @@ class AdminController extends Controller
      */
     public function addAction(Request $request)
     {
+        $user = new User();
+
+        $form   = $this->get('form.factory')->create(RegistrationType::class, $user);
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $userManager = $this->get('fos_user.user_manager');
+            $userManager->updateUser($user);
+            return $this->redirectToRoute("adminpage");
+        }
+
+        return $this->render('admin/addUser.html.twig', [
+            "form" => $form->createView(),
+            ]);
+
         
     }
 
 
     /**
-     * @Route("/admin/user/{id}", name="edituseradminpage")
+     * @Route("/admin/user/edit/{id}", name="edituseradminpage")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function editAction(Request $request, $id)
@@ -52,11 +68,17 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin/user/{id}", name="deleteuseradminpage")
+     * @Route("/admin/user/delete/{id}", name="deleteuseradminpage")
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction(Request $request, $id)
     {
-        
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(array('id'=>$id));
+
+        // suppression du compte
+        $userManager->deleteUser($user);
+
+        return $this->redirectToRoute('adminpage');
     }
 }
