@@ -45,6 +45,7 @@ class AdminController extends Controller
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $userManager = $this->get('fos_user.user_manager');
+            $user->setEnabled(true);
             $userManager->updateUser($user);
             return $this->redirectToRoute("adminpage");
         }
@@ -63,8 +64,20 @@ class AdminController extends Controller
      */
     public function editAction(Request $request, $id)
     {
+        $userManager = $this->get('fos_user.user_manager');
+        $user = $userManager->findUserBy(array('id'=>$id));
 
-       
+        $form = $this->get('form.factory')->create(RegistrationType::class, $user);
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+
+            $userManager->updateUser($user);
+            return $this->redirectToRoute("adminpage");
+        }
+
+         return $this->render('admin/addUser.html.twig', [
+            "form" => $form->createView(),
+            ]); 
     }
 
     /**
