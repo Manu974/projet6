@@ -32,17 +32,17 @@
     {% if app.user and is_granted('ROLE_ADMIN') %}<td><a href="http://{{printer.adresseip}}">{{printer.adresseip}}</a></td>{%endif%}
     <td>{{printer.dateachat|date("m/d/Y")}}</td>
     <td>{{printer.garantie}} ans</td>
-    <td data-remplacement="{{printer.black}}">Remplacée {{printer.black}} fois {% if app.user and is_granted('ROLE_ADMIN') %}<div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'black' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
+    <td data-remplacement="{{printer.black}}">Remplacée <strong>{{printer.black}}</strong> fois {% if app.user and is_granted('ROLE_ADMIN') %}<div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'black' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
     </a>
 
     {% if printer.black >= 1 %}<a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'black' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
     </a>{% endif %}</div>{%endif%}</td>
 
-    <td data-remplacement="{{printer.cyan}}">Remplacée {{printer.cyan}} fois {% if app.user and is_granted('ROLE_ADMIN') %}<div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'cyan' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
+    <td data-remplacement="{{printer.cyan}}">Remplacée <strong>{{printer.cyan}}</strong> fois {% if app.user and is_granted('ROLE_ADMIN') %}<div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'cyan' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
     </a> 
       {% if printer.cyan >= 1 %}<a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'cyan' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
     </a>{% endif %}</div>{%endif%}</td>
-    <td data-remplacement="{{printer.red}}">Remplacée {{printer.red}} fois {% if app.user and is_granted('ROLE_ADMIN') %}<div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'red' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
+    <td data-remplacement="{{printer.red}}">Remplacée <strong>{{printer.red}}</strong> fois {% if app.user and is_granted('ROLE_ADMIN') %}<div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'red' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
     </a>
      {% if printer.red >= 1 %}<a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'red' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
     </a>{% endif %}</div>{%endif%}</td>

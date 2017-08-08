@@ -46,7 +46,7 @@
         <li class="{% if adminMenu is defined %}active{% endif %}"><a href="admin"><span class="glyphicon glyphicon-cog"></span> Administration</a></li>
         {% endif %}
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        <li><a>Connecté en tant que <strong>{{ app.user.username }}</strong> <span class="glyphicon glyphicon-user"></span></a></li>
+        <li><a>Connecté en tant que <strong>{{ app.user.username }}</strong>{% if app.user and is_granted('ROLE_ADMIN') %} <span class="fa fa-user-secret"></span>{%else%}<span class="glyphicon glyphicon-user"></span>{%endif%}</a></li>
         <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Deconnexion</a></li>  
         {% else  %}
         <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
