@@ -20,6 +20,7 @@
 </head>
 
 <body>
+
   <div class="container">
         <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
             <div class="container-fluid">
@@ -33,13 +34,23 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
+      {% if app.user %}
         <li class="active"><a href="{{ path('homepage') }}"><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp;Accueil</a></li>
         <li><a href="{{ path('printerpage') }}">Imprimante</a></li>
         <li><a href="{{ path('cartridgepage') }}">Cartouche</a></li> 
+        {% endif %}
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <!--<li><a href=""><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>-->
+        {% if app.user and is_granted('ROLE_ADMIN') %}
+        <li class="{% if adminMenu is defined %}active{% endif %}"><a href="admin"><span class="glyphicon glyphicon-cog"></span> Administration</a></li>
+        {% endif %}
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <li><a>Connecté en tant que <strong>{{ app.user.username }}</strong>{% if app.user and is_granted('ROLE_ADMIN') %} <span class="fa fa-user-secret"></span>{%else%}<span class="glyphicon glyphicon-user"></span>{%endif%}</a></li>
+        <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Deconnexion</a></li>  
+        {% else  %}
+        <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+        {% endif %}
       </ul>
     </div>
   </div>

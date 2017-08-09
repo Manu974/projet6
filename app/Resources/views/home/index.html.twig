@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+
 {% block content %}
 
 <div class="row">
@@ -50,7 +51,7 @@
 					      <tr data-quantite={{cartridge.quantite}}>
 					      	<td>{{cartridge.marque}}</td>
 					        <td>{{cartridge.modele}}</td>
-					        <td>{{cartridge.quantite}} {% if cartridge.quantite < 5 and cartridge.quantite >= 3  %} <span class=" glyphicon glyphicon-exclamation-sign"></span> <a href="{{ path('cartridgepage') }}" class="btn btn-warning btnLow">Niveau stock bas <span class="fa fa-chevron-right"></span></a>{% endif%} {% if cartridge.quantite < 3 %} <span class="fa fa-exclamation-triangle"></span><span class="fa fa-exclamation-triangle"></span> <a href="{{ path('cartridgepage') }}" class="btn btn-danger btnVeryLow">Niveau stock très bas <span class="fa fa-chevron-right"></a>{% endif%}</td>
+					        <td>{{cartridge.quantite}} {% if cartridge.quantite < 5 and cartridge.quantite >= 3  %} <span class=" glyphicon glyphicon-exclamation-sign"></span>{% if app.user and is_granted('ROLE_ADMIN') %} <a href="{{ path('cartridgepage') }}" class="btn btn-warning btnLow">Niveau stock bas <span class="fa fa-chevron-right"></span></a>{% endif%} {% if cartridge.quantite < 3 %} <span class="fa fa-exclamation-triangle"></span><span class="fa fa-exclamation-triangle"></span> <a href="{{ path('cartridgepage') }}" class="btn btn-danger btnVeryLow">Niveau stock très bas <span class="fa fa-chevron-right"></a>{% endif%}{% endif%}</td>
 					      </tr>
 					      {% endfor %}
 					    </tbody>
@@ -73,11 +74,12 @@
 			  <div class="panel-body">
 				   <ul class="list-group">
 				   {% for commande in commandes %}
-				  		<li class="list-group-item list-group-item-warning"> {{commande.quantite}} cartouche(s) {{commande.modele}}, en commande depuis le {{commande.datedecommande|date("m/d/Y")}} <a class="btn btn-info btn-xs" href="{{ path('cancelCommande', { 'id': commande.cartouche.id }) }}" title="Commande"><span class="glyphicon glyphicon-shopping-cart"></span> Annuler la commande
+				  		<li class="list-group-item list-group-item-warning"> {{commande.quantite}} cartouche(s) {{commande.modele}}, en commande depuis le {{commande.datedecommande|date("m/d/Y")}} {% if app.user and is_granted('ROLE_ADMIN') %}<a class="btn btn-info btn-xs" href="{{ path('cancelCommande', { 'id': commande.cartouche.id }) }}" title="Commande"><span class="glyphicon glyphicon-shopping-cart"></span> Annuler la commande
                         </a>
 
                         <a class="btn btn-success btn-xs" href="{{ path('validCommande', { 'id': commande.cartouche.id}) }}" title="Commande"><span class="glyphicon glyphicon-shopping-cart"></span> Valider la Réception
                         </a> </li>
+                        {% endif %}
 				  		
 				  	{% endfor %} 
 				   </ul>
@@ -123,7 +125,7 @@
             "lengthMenu": "Afficher _MENU_ cartouches par tableau",
             "zeroRecords": "Aucune cartouche en stock",
             "info": "Cartouche de _START_ à _END_ sur _TOTAL_ cartouches",
-            "infoEmpty": "No records available",
+            "infoEmpty": "Pas de résultats disponibles",
             "search":         "Rechercher:",
             "infoFiltered": "( Filtré sur _MAX_ cartouches au total)",
             "paginate": {

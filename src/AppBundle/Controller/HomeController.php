@@ -9,11 +9,13 @@ use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Imprimante;
 use AppBundle\Entity\Cartouche;
 use AppBundle\Entity\Commande;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class HomeController extends Controller
 {
     /**
      * @Route("/", name="homepage")
+     * @Security("has_role('ROLE_USER')")
      */
     public function indexAction(Request $request)
     {

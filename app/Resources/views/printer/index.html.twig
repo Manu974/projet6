@@ -13,13 +13,13 @@
             <th>Modele</th>
             <th>Localisation</th>
             <th>Type</th>
-            <th>Adresse Ip</th>
+            {% if app.user and is_granted('ROLE_ADMIN') %}<th>Adresse Ip</th>{%endif%}
             <th>Date d'achat</th>
             <th>garantie</th>
             <th>cartouche noir</th>
             <th>cartouche cyan</th>
             <th>cartouche rouge</th>
-            <th><em class="fa fa-cog"></em></th>
+            {% if app.user and is_granted('ROLE_ADMIN') %}<th><em class="fa fa-cog"></em></th>{%endif%}
       </tr>
    </thead>
    <tbody>
@@ -29,23 +29,24 @@
     <td>{{printer.modele}}</td>
     <td>{{printer.localisation}}</td>
     <td>{{printer.type}}</td>
-    <td><a href="http://{{printer.adresseip}}">{{printer.adresseip}}</a></td>
+    {% if app.user and is_granted('ROLE_ADMIN') %}<td><a href="http://{{printer.adresseip}}">{{printer.adresseip}}</a></td>{%endif%}
     <td>{{printer.dateachat|date("m/d/Y")}}</td>
     <td>{{printer.garantie}} ans</td>
-    <td data-remplacement="{{printer.black}}">Remplacée {{printer.black}} fois <div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'black' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
+    <td data-remplacement="{{printer.black}}">Remplacée <strong>{{printer.black}}</strong> fois {% if app.user and is_granted('ROLE_ADMIN') %}<div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'black' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
     </a>
-    {% if printer.black >= 1 %}<a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'black' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
-    </a>{% endif %}</div></td>
 
-    <td data-remplacement="{{printer.cyan}}">Remplacée {{printer.cyan}} fois <div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'cyan' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
+    {% if printer.black >= 1 %}<a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'black' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
+    </a>{% endif %}</div>{%endif%}</td>
+
+    <td data-remplacement="{{printer.cyan}}">Remplacée <strong>{{printer.cyan}}</strong> fois {% if app.user and is_granted('ROLE_ADMIN') %}<div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'cyan' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
     </a> 
       {% if printer.cyan >= 1 %}<a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'cyan' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
-    </a>{% endif %}</div></td>
-    <td data-remplacement="{{printer.red}}">Remplacée {{printer.red}} fois <div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'red' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
+    </a>{% endif %}</div>{%endif%}</td>
+    <td data-remplacement="{{printer.red}}">Remplacée <strong>{{printer.red}}</strong> fois {% if app.user and is_granted('ROLE_ADMIN') %}<div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'red' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
     </a>
      {% if printer.red >= 1 %}<a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'red' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
-    </a>{% endif %}</div></td>
-    <td>
+    </a>{% endif %}</div>{%endif%}</td>
+    {% if app.user and is_granted('ROLE_ADMIN') %}<td>
     <a href="{{ path('editprinterpage', { 'id': printer.id }) }}" class="btn btn-info btn-xs" title="Edit"><em class="fa fa-pencil"></em>
     </a>
     <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#printerDialog{{ printer.id }}"><em class="fa fa-trash"></em>
@@ -67,7 +68,7 @@
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal -->
-    </td>
+    </td>{%endif%}
    </tr>
     {% endfor %}
     </tbody>
@@ -81,11 +82,11 @@
     </div>
    {%endif%}
 </div>
-
+{% if app.user and is_granted('ROLE_ADMIN') %}
 <div class="row" id="ajoutImprimante">
    <a href="{{ path('addprinterpage') }}" class="btn btn-primary" ><span class="glyphicon glyphicon-print"></span> Ajouter une Imprimante</a>
 </div>
-
+{%endif%}
 <div class="row">
     <div id="listPrinter" >
   {% for printer in printers %}
@@ -215,7 +216,7 @@
             "lengthMenu": "Afficher _MENU_ imprimantes par tableau",
             "zeroRecords": "Aucune imprimante en stock",
             "info": "Imprimante de _START_ à _END_ sur _TOTAL_ imprimantes",
-            "infoEmpty": "No records available",
+            "infoEmpty": "Pas de résultats disponibles",
             "search":         "Rechercher:",
             "infoFiltered": "( Filtré sur _MAX_ imprimantes au total)",
             "paginate": {

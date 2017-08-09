@@ -11,11 +11,13 @@ use AppBundle\Entity\Imprimante;
 use AppBundle\Form\CartoucheType;
 use AppBundle\Entity\Commande;
 use AppBundle\Form\CommandeType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class CommandeController extends Controller
 {
     /**
      * @Route("/cartridge/commande/{id}", name="commandecartridgepage")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function commandeAction(Request $request, $id)
     {
@@ -58,6 +60,7 @@ class CommandeController extends Controller
 
     /**
      * @Route("/cartridge/commande/cancel/{id}", name="cancelCommande")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function cancelAction(Request $request, $id)
     {
@@ -82,6 +85,7 @@ class CommandeController extends Controller
 
     /**
      * @Route("/cartridge/commande/valid/{id}", name="validCommande")
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function validAction(Request $request, $id)
     {

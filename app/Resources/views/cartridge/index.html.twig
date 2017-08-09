@@ -16,7 +16,7 @@
             <th>Date de réapprovisionnement</th>
             <th>Modele Imprimante</th>
             <th>Commande en cours ?</th>
-            <th><em class="fa fa-cog"></em></th>
+            {% if app.user and is_granted('ROLE_ADMIN') %}<th><em class="fa fa-cog"></em></th>{%endif%}
       </tr>
    </thead>
   
@@ -27,14 +27,14 @@
     <td>{{cartridge.marque}}</td>
     <td>{{cartridge.modele}}</td>
     <td>{{cartridge.type}}</td>
-    <td>{{cartridge.quantite}} {% if cartridge.quantite < 5 and cartridge.quantite >= 3  %}<span class=" glyphicon glyphicon-exclamation-sign"></span>{% endif%} {% if cartridge.quantite < 3 %}<span class="   glyphicon glyphicon-tint"></span>{% endif%}<div class="btn-group"><a href="{{ path('takecartridge', { 'id': cartridge.id }) }}" class="btn btn-info btn-xs btnTakeCartridge" title="Edit"><span class="glyphicon glyphicon-minus"> <a href="{{ path('depositcartridge', { 'id': cartridge.id }) }}" class="btn btn-warning btn-xs btnDepositCartridge" title="Edit"><span class="glyphicon glyphicon-plus"></span>
-    </a></div></td>
+    <td>{{cartridge.quantite}} {% if cartridge.quantite < 5 and cartridge.quantite >= 3  %}<span class=" glyphicon glyphicon-exclamation-sign"></span>{% endif%} {% if cartridge.quantite < 3 %}<span class="   glyphicon glyphicon-tint"></span>{% endif%}{% if app.user and is_granted('ROLE_ADMIN') %}<div class="btn-group"><a href="{{ path('takecartridge', { 'id': cartridge.id }) }}" class="btn btn-info btn-xs btnTakeCartridge" title="Edit"><span class="glyphicon glyphicon-minus"> <a href="{{ path('depositcartridge', { 'id': cartridge.id }) }}" class="btn btn-warning btn-xs btnDepositCartridge" title="Edit"><span class="glyphicon glyphicon-plus"></span>
+    </a></div>{%endif%}</td>
     <td>{% if cartridge.reapprovisionnement %}{{cartridge.reapprovisionnement|date("m/d/Y")}}{% else %} Pas d'ajout{% endif%}</td>
     <td>{% for printer in cartridge.printers %}
       {{ printer.modele }}({{printer.localisation}}){% if not loop.last %}, {% endif %}
     {% endfor %}</td>
     <td>{% if cartridge.statuscommande %} Commande en cours{% else %}Pas de commande en cours{% endif%}</td>
-    <td><a href="{{ path('editcartridgepage', { 'id': cartridge.id }) }}" class="btn btn-info btn-xs" title="Edit"><em class="fa fa-pencil"></em>
+    {% if app.user and is_granted('ROLE_ADMIN') %}<td><a href="{{ path('editcartridgepage', { 'id': cartridge.id }) }}" class="btn btn-info btn-xs" title="Edit"><em class="fa fa-pencil"></em>
     </a>
     <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#cartridgeDialog{{ cartridge.id }}"><em class="fa fa-trash"></em>
                         </button>
@@ -68,7 +68,7 @@
                         </a>
                         {% endif %}
     </td>
-    
+    {%endif%}
    </tr>
     {% endfor %}
     </tbody>
@@ -85,10 +85,11 @@
     </div>
    {%endif%}
 </div>
+{% if app.user and is_granted('ROLE_ADMIN') %}
 <div class="row" id="ajoutCartouche">
    <a href="{{ path('addcartridgepage') }}" class="btn btn-primary" ><span class="glyphicon glyphicon-plus"></span> Ajouter une Cartouche</a>
 </div>
-
+{%endif%}
 
   <div class="row">
     <div id="listCartridge" >
@@ -225,7 +226,7 @@
             "lengthMenu": "Afficher _MENU_ cartouches par tableau",
             "zeroRecords": "Aucune cartouche en stock",
             "info": "Cartouche de _START_ à _END_ sur _TOTAL_ cartouches",
-            "infoEmpty": "No records available",
+            "infoEmpty": "Pas de résultats disponibles",
             "search":         "Rechercher:",
             "infoFiltered": "( Filtré sur _MAX_ cartouches au total)",
             "paginate": {
