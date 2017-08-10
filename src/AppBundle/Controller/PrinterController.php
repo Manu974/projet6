@@ -26,14 +26,6 @@ class PrinterController extends Controller
 
         $printers = $repository->findAll();
 
-        /*foreach ($printers as $printer) {
-         if($printer->getBlack() >= 3){
-
-          $request->getSession()->getFlashBag()->add('info', 'Attention surconsommation de cartouche');
-         }
-        }*/
-
-        // replace this example code with whatever you need
         return $this->render('printer/index.html.twig', [
             "printers" => $printers,
         ]);
@@ -63,7 +55,6 @@ class PrinterController extends Controller
           return $this->redirectToRoute('printerpage');
         }   
 
-        // replace this example code with whatever you need
         return $this->render('printer/add.html.twig', [
             "form" => $form->createView(),
         ]);
@@ -97,7 +88,6 @@ class PrinterController extends Controller
           return $this->redirectToRoute('printerpage');
         }   
 
-        // replace this example code with whatever you need
         return $this->render('printer/add.html.twig', [
             "form" => $form->createView(),
         ]);

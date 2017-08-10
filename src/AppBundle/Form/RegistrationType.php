@@ -32,8 +32,6 @@ class RegistrationType extends AbstractType
     {
         return 'FOS\UserBundle\Form\Type\RegistrationFormType';
 
-        // Or for Symfony < 2.8
-        // return 'fos_user_registration';
     }
 
     public function getBlockPrefix()
@@ -41,5 +39,4 @@ class RegistrationType extends AbstractType
         return 'app_user_registration';
     }
 
-    
 }
