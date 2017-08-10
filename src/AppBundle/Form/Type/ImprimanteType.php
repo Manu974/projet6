@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -10,9 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class CartoucheType extends AbstractType
+class ImprimanteType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -21,28 +20,30 @@ class CartoucheType extends AbstractType
     {
         $builder
             ->add('marque', TextType::class)
+            ->add('modele', TextType::class)
+            ->add('localisation', TextType::class, [
+                'label' => "Où est installé l'imprimante ?",
+                ])
             ->add('type', ChoiceType::class, [
                  'choices'  => array(
-                        "Laser noir" => "Laser noir",
-                        "Laser rouge" => "Laser rouge",
-                        "Laser cyan" => "Laser cyan",
-                        "Jet d'encre noir" => "Jet d'encre noir",
-                        "Jet d'encre rouge" => "Jet d'encre rouge",
-                        "Jet d'encre cyan" => "Jet d'encre cyan",
+                        "Laser monochrome" => "Laser monochrome",
+                        "Laser couleur" => "Laser couleur",
+                        "Jet d'encre monochrome" => "Jet d'encre monochrome",
+                        "Jet d'encre couleur" => "Jet d'encre couleur",
                     ),
                 ])
-            ->add('quantite', IntegerType::class)
-            ->add('modele', TextType::class)
-            ->add('printers', EntityType::class, [
-                'class'        => 'AppBundle:Imprimante',
-                'label'        => "Modele d'imprimante",
-                'choice_label' => 'modele',
-                'multiple'     => true,
-            ])
+            ->add('adresseip', TextType::class, [
+                'label' => 'Adresse Ip',
+                ])
+            ->add('dateachat', DateType::class, [
+                'label' => "Date de livraison",
+                ])
+            ->add('garantie', IntegerType::class, [
+                'label' => 'Années de garantie',
+                ])
             ->add('save', SubmitType::class, [
                 'label' => 'Valider'
-                ])
-            ;
+                ]);
     }
     
     /**
@@ -51,7 +52,7 @@ class CartoucheType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Cartouche'
+            'data_class' => 'AppBundle\Entity\Imprimante'
         ));
     }
 
@@ -60,7 +61,7 @@ class CartoucheType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_cartouche';
+        return 'appbundle_imprimante';
     }
 
 

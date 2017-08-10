@@ -12,7 +12,7 @@ use AppBundle\Entity\Commande;
 use AppBundle\Entity\User;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Form\RegistrationType;
+use AppBundle\Form\Type\RegistrationType;
 class AdminController extends Controller
 {
     /**

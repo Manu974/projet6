@@ -8,9 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Cartouche;
 use AppBundle\Entity\Imprimante;
-use AppBundle\Form\CartoucheType;
+use AppBundle\Form\Type\CartoucheType;
 use AppBundle\Entity\Commande;
-use AppBundle\Form\CommandeType;
+use AppBundle\Form\Type\CommandeType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class CommandeController extends Controller

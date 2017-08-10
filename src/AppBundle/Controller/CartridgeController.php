@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Cartouche;
 use AppBundle\Entity\Imprimante;
-use AppBundle\Form\CartoucheType;
+use AppBundle\Form\Type\CartoucheType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class CartridgeController extends Controller
