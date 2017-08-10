@@ -99,47 +99,8 @@
 
 {% block javascripts %}
     {{parent()}}
-<script>
-    $(function() {
-      $('tr').each(function(){
-
-        var quantite = $(this).attr("data-quantite");
-
-        if( quantite < 5 && quantite >= 3){
-                $(this).css('background-color', '#FAB861');
-            }
-
-            if( quantite <3){
-                $(this).css('background-color', '#F66060');
-            }
-
-
-      });
-    });
-    </script>
-
-    <script type="text/javascript">
-     $(document).ready( function () {
-    $('#tablePrinterHome').DataTable({
-      "language": {
-            "lengthMenu": "Afficher _MENU_ cartouches par tableau",
-            "zeroRecords": "Aucune cartouche en stock",
-            "info": "Cartouche de _START_ à _END_ sur _TOTAL_ cartouches",
-            "infoEmpty": "Pas de résultats disponibles",
-            "search":         "Rechercher:",
-            "infoFiltered": "( Filtré sur _MAX_ cartouches au total)",
-            "paginate": {
-                "first":      "Début",
-                "last":       "Fin",
-                "next":       "Suivant",
-                "previous":   "Précédent"
-              }
-        },
-
-        "lengthMenu": [ 5, 10]
-    });
-} );
-   </script>
+	<script type="text/javascript" src="{{ asset('js/home/AlertTabPageHome.js') }}"></script>
+   <script type="text/javascript" src="{{ asset('js/home/ParamTabPageHome.js') }}"></script>
   {% endblock %}
 
  
