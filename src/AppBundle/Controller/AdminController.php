@@ -27,7 +27,7 @@ class AdminController extends Controller
 
        
         // replace this example code with whatever you need
-        return $this->render('admin/index.html.twig', [
+        return $this->render('admin/indexAdmin.html.twig', [
             "users" => $users,
             ]);
     }
