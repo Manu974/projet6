@@ -110,7 +110,4 @@ class CommandeController extends Controller
         return $this->redirectToRoute('cartridgepage');
 
     }
-
-
-
 }
