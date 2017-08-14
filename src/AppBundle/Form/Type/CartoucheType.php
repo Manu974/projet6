@@ -22,14 +22,14 @@ class CartoucheType extends AbstractType
         $builder
             ->add('marque', TextType::class)
             ->add('type', ChoiceType::class, [
-                 'choices'  => array(
-                        "Laser noir" => "Laser noir",
-                        "Laser rouge" => "Laser rouge",
-                        "Laser cyan" => "Laser cyan",
-                        "Jet d'encre noir" => "Jet d'encre noir",
-                        "Jet d'encre rouge" => "Jet d'encre rouge",
-                        "Jet d'encre cyan" => "Jet d'encre cyan",
-                    ),
+                 'choices'  => [
+                    "Laser noir" => "Laser noir",
+                    "Laser rouge" => "Laser rouge",
+                    "Laser cyan" => "Laser cyan",
+                    "Jet d'encre noir" => "Jet d'encre noir",
+                    "Jet d'encre rouge" => "Jet d'encre rouge",
+                    "Jet d'encre cyan" => "Jet d'encre cyan",
+                    ],
                 ])
             ->add('quantite', IntegerType::class)
             ->add('modele', TextType::class)
@@ -40,8 +40,8 @@ class CartoucheType extends AbstractType
                 'multiple'     => true,
             ])
             ->add('save', SubmitType::class, [
-                'label' => 'Valider'
-                ])
+                'label' => 'Valider',
+            ])
             ;
     }
     

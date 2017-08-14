@@ -25,13 +25,13 @@ class ImprimanteType extends AbstractType
                 'label' => "Où est installé l'imprimante ?",
                 ])
             ->add('type', ChoiceType::class, [
-                 'choices'  => array(
-                        "Laser monochrome" => "Laser monochrome",
-                        "Laser couleur" => "Laser couleur",
-                        "Jet d'encre monochrome" => "Jet d'encre monochrome",
-                        "Jet d'encre couleur" => "Jet d'encre couleur",
-                    ),
-                ])
+                'choices'  => [
+                    "Laser monochrome" => "Laser monochrome",
+                    "Laser couleur" => "Laser couleur",
+                    "Jet d'encre monochrome" => "Jet d'encre monochrome",
+                    "Jet d'encre couleur" => "Jet d'encre couleur",
+                ],
+            ])
             ->add('adresseip', TextType::class, [
                 'label' => 'Adresse Ip',
                 ])

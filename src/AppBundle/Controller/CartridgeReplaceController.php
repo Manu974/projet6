@@ -119,7 +119,7 @@ class CartridgeReplaceController extends Controller
         $cartridge->setQuantite($cartridge->getQuantite()+1);
 
         $em = $this->getDoctrine()->getManager();
-        
+
         $em->flush();
 
         return $this->redirectToRoute('cartridgepage');
