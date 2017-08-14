@@ -15,17 +15,17 @@ class RegistrationType extends AbstractType
     {
         $builder
         ->add('roles', ChoiceType::class, [
-                 'choices'  => array(
-                        "Utilisateur" => "ROLE_USER",
-                        "Administrateur" => "ROLE_ADMIN",
-                        "Super-Admin" => "ROLE_SUPER_ADMIN",
-                        
-                    ),
-                 'multiple' => true,
-                ])
+            'choices'  => [
+                "Utilisateur" => "ROLE_USER",
+                "Administrateur" => "ROLE_ADMIN",
+                "Super-Admin" => "ROLE_SUPER_ADMIN",
+            ],
+            'multiple' => true,
+        ])
         ->add('save', SubmitType::class, [
-                'label' => 'Valider'
-                ]);
+
+            'label' => 'Valider',
+        ]);
     }
 
     public function getParent()

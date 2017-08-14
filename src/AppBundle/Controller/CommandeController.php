@@ -16,16 +16,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class CommandeController extends Controller
 {
     /**
-     * @Route("/cartridge/commande/{id}", name="commandecartridgepage")
-     * @Security("has_role('ROLE_ADMIN')")
-     */
+    * @Route("/cartridge/commande/{id}", name="commandecartridgepage")
+    * @Security("has_role('ROLE_ADMIN')")
+    */
     public function commandeAction(Request $request, $id)
     {
         $commande = new Commande();
         $repository = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('AppBundle:Cartouche')
+        ->getDoctrine()
+        ->getManager()
+        ->getRepository('AppBundle:Cartouche')
         ;
 
         $cartridge = $repository->find($id);
@@ -34,7 +34,6 @@ class CommandeController extends Controller
         $commande->setDatedelivraison(null);
 
         $form = $this->get('form.factory')->create(CommandeType::class, $commande);
-
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $cartridge->setStatuscommande(true);
@@ -51,7 +50,6 @@ class CommandeController extends Controller
             return $this->redirectToRoute('cartridgepage');
         }
 
-        // replace this example code with whatever you need
         return $this->render('commande/commande.html.twig', [
             "cartridge" => $cartridge,
             "form" => $form->createView(),
@@ -59,45 +57,46 @@ class CommandeController extends Controller
     }
 
     /**
-     * @Route("/cartridge/commande/cancel/{id}", name="cancelCommande")
-     * @Security("has_role('ROLE_ADMIN')")
-     */
+    * @Route("/cartridge/commande/cancel/{id}", name="cancelCommande")
+    * @Security("has_role('ROLE_ADMIN')")
+    */
     public function cancelAction(Request $request, $id)
     {
         $repositoryCommande = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('AppBundle:Commande')
+        ->getDoctrine()
+        ->getManager()
+        ->getRepository('AppBundle:Commande')
         ;
 
         $commandes = $repositoryCommande->findBy(['cartouche' => $id]);
 
         $em = $this->getDoctrine()->getManager();
+
         foreach ($commandes as $commande) {
             $commande->getCartouche()->setStatuscommande(false);
             $em->remove($commande);
         }
-       
+
         $em->flush();
         return $this->redirectToRoute('cartridgepage');
-
     }
 
     /**
-     * @Route("/cartridge/commande/valid/{id}", name="validCommande")
-     * @Security("has_role('ROLE_ADMIN')")
-     */
+    * @Route("/cartridge/commande/valid/{id}", name="validCommande")
+    * @Security("has_role('ROLE_ADMIN')")
+    */
     public function validAction(Request $request, $id)
     {
         $repositoryCommande = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('AppBundle:Commande')
+        ->getDoctrine()
+        ->getManager()
+        ->getRepository('AppBundle:Commande')
         ;
 
         $commandes = $repositoryCommande->findBy(['cartouche' => $id]);
 
         $em = $this->getDoctrine()->getManager();
+
         foreach ($commandes as $commande) {
             $commande->setStatuscommande(true);
             $commande->getCartouche()->setQuantite($commande->getQuantite()+$commande->getCartouche()->getQuantite());
@@ -105,9 +104,8 @@ class CommandeController extends Controller
             $commande->getCartouche()->setReapprovisionnement(new \Datetime("now"));
             $em->remove($commande);
         }
-       
+
         $em->flush();
         return $this->redirectToRoute('cartridgepage');
-
     }
 }
