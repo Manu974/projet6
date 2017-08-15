@@ -50,7 +50,7 @@ class Printer
 
 	public function replaceCartridge($id, $slug)
 	{
-		$repositoryImprimante = $this->em->getRepository('AppBundle:Imprimante');
+		
 		$printer= self::findOnePrinter($id);
 
 		if($slug == "black"){
@@ -70,10 +70,8 @@ class Printer
 
 	public function replaceBackCartridge($id, $slug)
 	{
-		$repositoryImprimante = $this->em->getRepository('AppBundle:Imprimante');
 		$printer= self::findOnePrinter($id);
 
-		
         if($slug == "black"){
             $printer->setBlack($printer->getBlack()-1);
         }
