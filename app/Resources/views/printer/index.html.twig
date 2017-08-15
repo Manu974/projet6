@@ -1,14 +1,13 @@
 {% extends 'base.html.twig' %}
-
 {% block content %}
 <div class="row">
   {%if printers %}
-<div class="tab-content">
-  <div id="printers" class="tab-pane fade in active table-responsive">
-  <h4>Liste des Imprimantes en services</h4>
-    <table class="table table-bordered table-striped table-hover" id="tablePrinter">
-   <thead>
-      <tr>
+    <div class="tab-content">
+      <div id="printers" class="tab-pane fade in active table-responsive">
+        <h4>Liste des Imprimantes en services</h4>
+        <table class="table table-bordered table-striped table-hover" id="tablePrinter">
+          <thead>
+            <tr>
             <th>Marque</th>
             <th>Modele</th>
             <th>Localisation</th>
@@ -20,217 +19,107 @@
             <th>cartouche cyan</th>
             <th>cartouche rouge</th>
             {% if app.user and is_granted('ROLE_ADMIN') %}<th><em class="fa fa-cog"></em></th>{%endif%}
-      </tr>
-   </thead>
-   <tbody>
-   {% for printer in printers %}
-   <tr>
-    <td>{{printer.marque}}</td>
-    <td>{{printer.modele}}</td>
-    <td>{{printer.localisation}}</td>
-    <td>{{printer.type}}</td>
-    {% if app.user and is_granted('ROLE_ADMIN') %}<td><a href="http://{{printer.adresseip}}">{{printer.adresseip}}</a></td>{%endif%}
-    <td>{{printer.dateachat|date("m/d/Y")}}</td>
-    <td>{{printer.garantie}} ans</td>
-    <td data-remplacement="{{printer.black}}">Remplacée <strong>{{printer.black}}</strong> fois {% if app.user and is_granted('ROLE_ADMIN') %}<div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'black' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
-    </a>
+            </tr>
+          </thead>
+          <tbody>
+            {% for printer in printers %}
+              <tr>
+                <td>{{printer.marque}}</td>
+                <td>{{printer.modele}}</td>
+                <td>{{printer.localisation}}</td>
+                <td>{{printer.type}}</td>
+                {% if app.user and is_granted('ROLE_ADMIN') %}<td><a href="http://{{printer.adresseip}}">{{printer.adresseip}}</a></td>{%endif%}
+                <td>{{printer.dateachat|date("m/d/Y")}}</td>
+                <td>{{printer.garantie}} ans</td>
+                <td data-remplacement="{{printer.black}}">Remplacée <strong>{{printer.black}}</strong> fois {% if app.user and is_granted('ROLE_ADMIN') %}<div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'black' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
+                </a>
 
-    {% if printer.black >= 1 %}<a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'black' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
-    </a>{% endif %}</div>{%endif%}</td>
+                {% if printer.black >= 1 %}<a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'black' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
+                </a>{% endif %}</div>{%endif%}</td>
 
-    <td data-remplacement="{{printer.cyan}}">Remplacée <strong>{{printer.cyan}}</strong> fois {% if app.user and is_granted('ROLE_ADMIN') %}<div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'cyan' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
-    </a> 
-      {% if printer.cyan >= 1 %}<a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'cyan' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
-    </a>{% endif %}</div>{%endif%}</td>
-    <td data-remplacement="{{printer.red}}">Remplacée <strong>{{printer.red}}</strong> fois {% if app.user and is_granted('ROLE_ADMIN') %}<div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'red' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
-    </a>
-     {% if printer.red >= 1 %}<a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'red' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
-    </a>{% endif %}</div>{%endif%}</td>
-    {% if app.user and is_granted('ROLE_ADMIN') %}<td>
-    <a href="{{ path('editprinterpage', { 'id': printer.id }) }}" class="btn btn-info btn-xs" title="Edit"><em class="fa fa-pencil"></em>
-    </a>
-    <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#printerDialog{{ printer.id }}"><em class="fa fa-trash"></em>
-                        </button>
-                        <div class="modal fade" id="printerDialog{{ printer.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="myModalLabel">Confirmation nécessaire</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        Voulez-vous supprimer réellement cette imprimante ?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                                        <a href="{{ path('deleteprinterpage', { 'id': printer.id }) }}" class="btn btn-danger">Confirmer</a>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
-    </td>{%endif%}
-   </tr>
-    {% endfor %}
-    </tbody>
-</table>
-</div>
-</div>
-{% else %}
-        <div class="panel panel-warning">
-      <div class="panel-heading">Information</div>
-      <div class="panel-body">Il n'y a pas d'imprimantes en service pour le moment</div>
-    </div>
-   {%endif%}
-</div>
-{% if app.user and is_granted('ROLE_ADMIN') %}
-<div class="row" id="ajoutImprimante">
-   <a href="{{ path('addprinterpage') }}" class="btn btn-primary" ><span class="glyphicon glyphicon-print"></span> Ajouter une Imprimante</a>
-</div>
-{%endif%}
-<div class="row">
-    <div id="listPrinter" >
-  {% for printer in printers %}
-  {% if (printer.black >=3) or (printer.red >=3) or (printer.cyan >=3)  %}
-  <ul class="list-group">
-  <div class="panel panel-printer">
-  <div class="panel-heading"><h4 name="titreAlerte" class="headingWarningPrinters">{{printer.marque}} {{printer.modele}} en {{printer.localisation}} </h4><span class="fa fa-exclamation-triangle warningPrinters"></div>
-  <div class="panel-body"> {% if printer.black >=3 %}
-
-  <li class="list-group-item list-group-item-danger">Surconsommation de cartouche NOIR</li>
-  {% endif %}
-  {% if printer.red >=3 %}
-  <li class="list-group-item list-group-item-danger">Surconsommation de cartouche ROUGE</li>
-  {% endif %}
-  {% if printer.cyan >=3 %}
-  <li class="list-group-item list-group-item-danger">Surconsommation de cartouche BLEU</li>
-  {% endif %}</div>
-</div>
-</ul>
-      {% endif %}
-      {% endfor%}
+                <td data-remplacement="{{printer.cyan}}">Remplacée <strong>{{printer.cyan}}</strong> fois {% if app.user and is_granted('ROLE_ADMIN') %}<div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'cyan' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
+                </a> 
+                {% if printer.cyan >= 1 %}<a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'cyan' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
+                </a>{% endif %}</div>{%endif%}</td>
+                <td data-remplacement="{{printer.red}}">Remplacée <strong>{{printer.red}}</strong> fois {% if app.user and is_granted('ROLE_ADMIN') %}<div class="btn-group"><a href="{{ path('cartridgereplace', { 'id': printer.id, 'slug':'red' }) }}" class="btn btn-info btn-xs" title="Edit"><span class="glyphicon glyphicon-plus"></span>
+                </a>
+                {% if printer.red >= 1 %}<a href="{{ path('cartridgereplaceback', { 'id': printer.id, 'slug':'red' }) }}" class="btn btn-danger btn-xs" title="Edit"><span class="glyphicon glyphicon-minus"></span>
+                </a>{% endif %}</div>{%endif%}</td>
+                {% if app.user and is_granted('ROLE_ADMIN') %}<td>
+                <a href="{{ path('editprinterpage', { 'id': printer.id }) }}" class="btn btn-info btn-xs" title="Edit"><em class="fa fa-pencil"></em>
+                </a>
+                <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#printerDialog{{ printer.id }}"><em class="fa fa-trash"></em>
+                </button>
+                <div class="modal fade" id="printerDialog{{ printer.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Confirmation nécessaire</h4>
+                      </div>
+                      <div class="modal-body">
+                        Voulez-vous supprimer réellement cette imprimante ?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                        <a href="{{ path('deleteprinterpage', { 'id': printer.id }) }}" class="btn btn-danger">Confirmer</a>
+                      </div>
+                    </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+                </td>{%endif%}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
+    </div>
+  {% else %}
+  <div class="panel panel-warning">
+    <div class="panel-heading">Information</div>
+    <div class="panel-body">Il n'y a pas d'imprimantes en service pour le moment</div>
+  </div>
+  {%endif%}
 </div>
 
+{% if app.user and is_granted('ROLE_ADMIN') %}
+  <div class="row" id="ajoutImprimante">
+    <a href="{{ path('addprinterpage') }}" class="btn btn-primary" ><span class="glyphicon glyphicon-print"></span> Ajouter une Imprimante</a>
+  </div>
+{%endif%}
+
+<div class="row">
+  <div id="listPrinter" >
+    {% for printer in printers %}
+      {% if (printer.black >=3) or (printer.red >=3) or (printer.cyan >=3)  %}
+        <ul class="list-group">
+          <div class="panel panel-printer">
+            <div class="panel-heading"><h4 name="titreAlerte" class="headingWarningPrinters">{{printer.marque}} {{printer.modele}} en {{printer.localisation}} </h4><span class="fa fa-exclamation-triangle warningPrinters"></div>
+            <div class="panel-body"> 
+              {% if printer.black >=3 %}
+                <li class="list-group-item list-group-item-danger">Surconsommation de cartouche NOIR</li>
+              {% endif %}
+              {% if printer.red >=3 %}
+                <li class="list-group-item list-group-item-danger">Surconsommation de cartouche ROUGE</li>
+              {% endif %}
+              {% if printer.cyan >=3 %}
+                <li class="list-group-item list-group-item-danger">Surconsommation de cartouche BLEU</li>
+              {% endif %}
+            </div>
+          </div>
+        </ul>
+      {% endif %}
+    {% endfor%}
+  </div>
+</div>
 <div class="row">
   <div id="page_navigation"> </div>
-</div>
-
-  
-
-     
+</div>   
 {% endblock %}
 
 {% block javascripts %}
-    {{parent()}}
-<script>
-    $(function() {
-      $('td').each(function(){
-
-        var quantite = $(this).attr("data-remplacement");
-
-        if( quantite >= 3){
-                $(this).css('background-color', '#FAB861');
-        }
-
-      });
-    });
-    </script>
-
-    <script> 
-
-    var show_per_page = 3; 
-    var current_page = 0;
-
-    function set_display(first, last) {
-      if($('#listPrinter')){
-        $('#listPrinter').children().css('display', 'none');
-      $('#listPrinter').children().slice(first, last).css('display', 'block');
-      }
-
-       if($('#listCartridge')){
-        $('#listCartridge').children().css('display', 'none');
-      $('#listCartridge').children().slice(first, last).css('display', 'block');
-      }
-      
-    }
-
-    function previous(){
-        if($('.active').prev('.page_link').length) go_to_page(current_page - 1);
-    }
-
-    function next(){
-        if($('.active').next('.page_link').length) go_to_page(current_page + 1);
-    }
-
-    function go_to_page(page_num){
-      current_page = page_num;
-      start_from = current_page * show_per_page;
-      end_on = start_from + show_per_page;
-      set_display(start_from, end_on);
-      $('.active').removeClass('active');
-      if($('#printers')){
-        $('#printers').addClass('active');
-      }
-
-      if($('#cartridges')){
-        $('#cartridges').addClass('active');
-      }
-
-      
-      $('#id' + page_num).addClass('active');
-    }  
-
-    $(document).ready(function() {
-      var number_of_pages = 0;
-      if($('#listPrinter')){
-        number_of_pages = Math.ceil($('#listPrinter').children().length / show_per_page);
-      }
-
-      else if($('#listCartridge')){
-        
-       number_of_pages = Math.ceil($('#listCartridge').children().length / show_per_page);
-      }
-
-      var nav = '<ul class="pagination pagination-sm"><li><a href="javascript:previous();">&laquo;</a>';
-
-      var i = -1;
-      while(number_of_pages > ++i){
-        nav += '<li class="page_link'
-        if(!i) nav += ' active';
-        nav += '" id="id' + i +'">';
-        nav += '<a href="javascript:go_to_page(' + i +')">'+ (i + 1) +'</a>';
-      }
-      nav += '<li><a href="javascript:next();">&raquo;</a></ul>';
-
-      $('#page_navigation').html(nav);
-      set_display(0, show_per_page);
-      
-    });
-
-  </script>
-
-  <script type="text/javascript">
-     $(document).ready( function () {
-    $('#tablePrinter').DataTable({
-       "language": {
-            "lengthMenu": "Afficher _MENU_ imprimantes par tableau",
-            "zeroRecords": "Aucune imprimante en stock",
-            "info": "Imprimante de _START_ à _END_ sur _TOTAL_ imprimantes",
-            "infoEmpty": "Pas de résultats disponibles",
-            "search":         "Rechercher:",
-            "infoFiltered": "( Filtré sur _MAX_ imprimantes au total)",
-            "paginate": {
-                "first":      "Début",
-                "last":       "Fin",
-                "next":       "Suivant",
-                "previous":   "Précédent"
-              }
-        },
-
-        "lengthMenu": [ 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100 ]
-    });
-} );
-   </script>
-  {% endblock %}
-
-
+  {{parent()}}
+  <script type="text/javascript" src="{{ asset('js/printer/AlertTabPagePrinter.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('js/printer/ListPagePrinter.js') }}"></script>
+  <script type="text/javascript" src="{{ asset('js/printer/ParamTabPagePrinter.js') }}"></script>
+{% endblock %}

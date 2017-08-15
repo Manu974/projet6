@@ -14,27 +14,27 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class HomeController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
-     * @Security("has_role('ROLE_USER')")
-     */
+    * @Route("/", name="homepage")
+    * @Security("has_role('ROLE_USER')")
+    */
     public function indexAction(Request $request)
     {
-          $repositoryImprimante = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('AppBundle:Imprimante')
+        $repositoryImprimante = $this
+        ->getDoctrine()
+        ->getManager()
+        ->getRepository('AppBundle:Imprimante')
         ;
 
         $repositoryCartouche = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('AppBundle:Cartouche')
+        ->getDoctrine()
+        ->getManager()
+        ->getRepository('AppBundle:Cartouche')
         ;
 
         $repositoryCommande = $this
-            ->getDoctrine()
-            ->getManager()
-            ->getRepository('AppBundle:Commande')
+        ->getDoctrine()
+        ->getManager()
+        ->getRepository('AppBundle:Commande')
         ;
 
         $printers = $repositoryImprimante->findAll();
@@ -43,10 +43,8 @@ class HomeController extends Controller
         $cartridges = $repositoryCartouche->findAll();
 
         $commandes = $repositoryCommande->findAll();
-       
-        // replace this example code with whatever you need
-        return $this->render('home/index.html.twig', [
 
+        return $this->render('home/index.html.twig', [
             "printers" => $printers,
             "cartridges" => $cartridges,
             "numberPrinters" => $numberPrinters,

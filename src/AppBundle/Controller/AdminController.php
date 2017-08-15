@@ -10,9 +10,9 @@ use AppBundle\Entity\Imprimante;
 use AppBundle\Entity\Cartouche;
 use AppBundle\Entity\Commande;
 use AppBundle\Entity\User;
-
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Form\RegistrationType;
+use AppBundle\Form\Type\RegistrationType;
+
 class AdminController extends Controller
 {
     /**
@@ -25,13 +25,10 @@ class AdminController extends Controller
 
         $users = $userManager->findUsers();
 
-       
-        // replace this example code with whatever you need
-        return $this->render('admin/index.html.twig', [
+        return $this->render('admin/indexAdmin.html.twig', [
             "users" => $users,
-            ]);
+        ]);
     }
-
 
     /**
      * @Route("/admin/user/add", name="adduseradminpage")
@@ -52,11 +49,8 @@ class AdminController extends Controller
 
         return $this->render('admin/addUser.html.twig', [
             "form" => $form->createView(),
-            ]);
-
-        
+        ]);        
     }
-
 
     /**
      * @Route("/admin/user/edit/{id}", name="edituseradminpage")
@@ -77,7 +71,7 @@ class AdminController extends Controller
 
          return $this->render('admin/addUser.html.twig', [
             "form" => $form->createView(),
-            ]); 
+        ]); 
     }
 
     /**

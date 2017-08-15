@@ -1,7 +1,7 @@
 <?php
 // src/AppBundle/Form/RegistrationType.php
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,25 +15,23 @@ class RegistrationType extends AbstractType
     {
         $builder
         ->add('roles', ChoiceType::class, [
-                 'choices'  => array(
-                        "Utilisateur" => "ROLE_USER",
-                        "Administrateur" => "ROLE_ADMIN",
-                        "Super-Admin" => "ROLE_SUPER_ADMIN",
-                        
-                    ),
-                 'multiple' => true,
-                ])
+            'choices'  => [
+                "Utilisateur" => "ROLE_USER",
+                "Administrateur" => "ROLE_ADMIN",
+                "Super-Admin" => "ROLE_SUPER_ADMIN",
+            ],
+            'multiple' => true,
+        ])
         ->add('save', SubmitType::class, [
-                'label' => 'Valider'
-                ]);
+
+            'label' => 'Valider',
+        ]);
     }
 
     public function getParent()
     {
         return 'FOS\UserBundle\Form\Type\RegistrationFormType';
 
-        // Or for Symfony < 2.8
-        // return 'fos_user_registration';
     }
 
     public function getBlockPrefix()
@@ -41,5 +39,4 @@ class RegistrationType extends AbstractType
         return 'app_user_registration';
     }
 
-    
 }

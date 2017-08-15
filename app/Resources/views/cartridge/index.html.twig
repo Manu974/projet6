@@ -1,246 +1,117 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-<div class="row">
-  {%if cartridges %}
-<div class="tab-content">
-  <div id="cartridges" class="tab-pane fade in active table-responsive">
-  <h4>Cartouches en stock</h4>
-    <table class="table table-bordered table-striped table-hover" id="tableCartridge">
-   <thead> 
-      <tr>
-            <th>Marque</th>
-            <th>Modele</th>
-            <th>Type</th>
-            <th>Quantite</th>
-            <th>Date de réapprovisionnement</th>
-            <th>Modele Imprimante</th>
-            <th>Commande en cours ?</th>
-            {% if app.user and is_granted('ROLE_ADMIN') %}<th><em class="fa fa-cog"></em></th>{%endif%}
-      </tr>
-   </thead>
-  
-   
-   <tbody id="tabCartridge">
-   {% for cartridge in cartridges %}
-   <tr data-quantite={{cartridge.quantite}}>
-    <td>{{cartridge.marque}}</td>
-    <td>{{cartridge.modele}}</td>
-    <td>{{cartridge.type}}</td>
-    <td>{{cartridge.quantite}} {% if cartridge.quantite < 5 and cartridge.quantite >= 3  %}<span class=" glyphicon glyphicon-exclamation-sign"></span>{% endif%} {% if cartridge.quantite < 3 %}<span class="   glyphicon glyphicon-tint"></span>{% endif%}{% if app.user and is_granted('ROLE_ADMIN') %}<div class="btn-group"><a href="{{ path('takecartridge', { 'id': cartridge.id }) }}" class="btn btn-info btn-xs btnTakeCartridge" title="Edit"><span class="glyphicon glyphicon-minus"> <a href="{{ path('depositcartridge', { 'id': cartridge.id }) }}" class="btn btn-warning btn-xs btnDepositCartridge" title="Edit"><span class="glyphicon glyphicon-plus"></span>
-    </a></div>{%endif%}</td>
-    <td>{% if cartridge.reapprovisionnement %}{{cartridge.reapprovisionnement|date("m/d/Y")}}{% else %} Pas d'ajout{% endif%}</td>
-    <td>{% for printer in cartridge.printers %}
-      {{ printer.modele }}({{printer.localisation}}){% if not loop.last %}, {% endif %}
-    {% endfor %}</td>
-    <td>{% if cartridge.statuscommande %} Commande en cours{% else %}Pas de commande en cours{% endif%}</td>
-    {% if app.user and is_granted('ROLE_ADMIN') %}<td><a href="{{ path('editcartridgepage', { 'id': cartridge.id }) }}" class="btn btn-info btn-xs" title="Edit"><em class="fa fa-pencil"></em>
-    </a>
-    <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#cartridgeDialog{{ cartridge.id }}"><em class="fa fa-trash"></em>
-                        </button>
-                        <div class="modal fade" id="cartridgeDialog{{ cartridge.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="myModalLabel">Confirmation nécessaire</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        Voulez-vous supprimer réellement cette cartouche ?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-                                        <a href="{{ path('deletecartridgepage', { 'id': cartridge.id }) }}" class="btn btn-danger">Confirmer</a>
-                                    </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
-                        {% if cartridge.statuscommande %}
+    <div class="row">
+        {%if cartridges %}
+            <div class="tab-content">
+                <div id="cartridges" class="tab-pane fade in active table-responsive">
+                    <h4>Cartouches en stock</h4>
+                    <table class="table table-bordered table-striped table-hover" id="tableCartridge">
+                        <thead> 
+                            <tr>
+                            <th>Marque</th>
+                            <th>Modele</th>
+                            <th>Type</th>
+                            <th>Quantite</th>
+                            <th>Date de réapprovisionnement</th>
+                            <th>Modele Imprimante</th>
+                            <th>Commande en cours ?</th>
+                            {% if app.user and is_granted('ROLE_ADMIN') %}<th><em class="fa fa-cog"></em></th>{%endif%}
+                            </tr>
+                        </thead> 
+                        <tbody id="tabCartridge">
+                            {% for cartridge in cartridges %}
+                                <tr data-quantite={{cartridge.quantite}}>
+                                    <td>{{cartridge.marque}}</td>
+                                    <td>{{cartridge.modele}}</td>
+                                    <td>{{cartridge.type}}</td>
+                                    <td>{{cartridge.quantite}} {% if cartridge.quantite < 5 and cartridge.quantite >= 3  %}<span class=" glyphicon glyphicon-exclamation-sign"></span>{% endif%} {% if cartridge.quantite < 3 %}<span class="   glyphicon glyphicon-tint"></span>{% endif%}{% if app.user and is_granted('ROLE_ADMIN') %}<div class="btn-group"><a href="{{ path('takecartridge', { 'id': cartridge.id }) }}" class="btn btn-info btn-xs btnTakeCartridge" title="Edit"><span class="glyphicon glyphicon-minus"> <a href="{{ path('depositcartridge', { 'id': cartridge.id }) }}" class="btn btn-warning btn-xs btnDepositCartridge" title="Edit"><span class="glyphicon glyphicon-plus"></span>
+                                    </a></div>{%endif%}</td>
+                                    <td>{% if cartridge.reapprovisionnement %}{{cartridge.reapprovisionnement|date("m/d/Y")}}{% else %} Pas d'ajout{% endif%}</td>
+                                    <td>{% for printer in cartridge.printers %}
+                                    {{ printer.modele }}({{printer.localisation}}){% if not loop.last %}, {% endif %}
+                                    {% endfor %}</td>
+                                    <td>{% if cartridge.statuscommande %} Commande en cours{% else %}Pas de commande en cours{% endif%}</td>
+                                    {% if app.user and is_granted('ROLE_ADMIN') %}<td><a href="{{ path('editcartridgepage', { 'id': cartridge.id }) }}" class="btn btn-info btn-xs" title="Edit"><em class="fa fa-pencil"></em>
+                                    </a>
+                                    <button type="button" class="btn btn-danger btn-xs" title="Delete" data-toggle="modal" data-target="#cartridgeDialog{{ cartridge.id }}"><em class="fa fa-trash"></em>
+                                    </button>
+                                    <div class="modal fade" id="cartridgeDialog{{ cartridge.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                    <h4 class="modal-title" id="myModalLabel">Confirmation nécessaire</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                Voulez-vous supprimer réellement cette cartouche ?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                                    <a href="{{ path('deletecartridgepage', { 'id': cartridge.id }) }}" class="btn btn-danger">Confirmer</a>
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->
+                                    {% if cartridge.statuscommande %}
+                                        <a class="btn btn-info btn-xs" href="{{ path('cancelCommande', { 'id': cartridge.id }) }}" title="Commande"><span class="glyphicon glyphicon-shopping-cart"></span> Annuler la commande
+                                        </a>
 
-                        <a class="btn btn-info btn-xs" href="{{ path('cancelCommande', { 'id': cartridge.id }) }}" title="Commande"><span class="glyphicon glyphicon-shopping-cart"></span> Annuler la commande
-                        </a>
-
-                        <a class="btn btn-success btn-xs" href="{{ path('validCommande', { 'id': cartridge.id }) }}" title="Commande"><span class="glyphicon glyphicon-shopping-cart"></span> Valider la Réception
-                        </a>
-
-                        {% else %}
-                        <a class="btn btn-warning btn-xs btnCommande" href="{{ path('commandecartridgepage', { 'id': cartridge.id }) }}" title="Commande"><span class="glyphicon glyphicon-shopping-cart"></span> Commander
-                        </a>
-                        {% endif %}
-    </td>
-    {%endif%}
-   </tr>
-    {% endfor %}
-    </tbody>
-    
-    
-</table>
-<div id="paging-first-datatable"></div>
-</div>
-</div>
-{% else %}
-        <div class="panel panel-warning">
-      <div class="panel-heading">Information</div>
-      <div class="panel-body">Il n'y a pas de cartouche en stock</div>
+                                        <a class="btn btn-success btn-xs" href="{{ path('validCommande', { 'id': cartridge.id }) }}" title="Commande"><span class="glyphicon glyphicon-shopping-cart"></span> Valider la Réception
+                                        </a>
+                                    {% else %}
+                                        <a class="btn btn-warning btn-xs btnCommande" href="{{ path('commandecartridgepage', { 'id': cartridge.id }) }}" title="Commande"><span class="glyphicon glyphicon-shopping-cart"></span> Commander
+                                        </a>
+                                    {% endif %}
+                                    </td>
+                                    {%endif%}
+                                </tr>
+                            {% endfor %}
+                        </tbody> 
+                    </table>
+                    <div id="paging-first-datatable"></div>
+                </div>
+            </div>
+        {% else %}
+            <div class="panel panel-warning">
+            <div class="panel-heading">Information</div>
+            <div class="panel-body">Il n'y a pas de cartouche en stock</div>
+            </div>
+        {%endif%}
     </div>
-   {%endif%}
-</div>
-{% if app.user and is_granted('ROLE_ADMIN') %}
-<div class="row" id="ajoutCartouche">
-   <a href="{{ path('addcartridgepage') }}" class="btn btn-primary" ><span class="glyphicon glyphicon-plus"></span> Ajouter une Cartouche</a>
-</div>
-{%endif%}
+    {% if app.user and is_granted('ROLE_ADMIN') %}
+        <div class="row" id="ajoutCartouche">
+        <a href="{{ path('addcartridgepage') }}" class="btn btn-primary" ><span class="glyphicon glyphicon-plus"></span> Ajouter une Cartouche</a>
+        </div>
+    {%endif%}
 
-  <div class="row">
-    <div id="listCartridge" >
-{% for cartridge in cartridges %}
-{% if (cartridge.quantite < 5 and cartridge.quantite >= 3) or (cartridge.quantite < 3) %}
-  <ul class="list-group">
- 
-   <div class="panel panel-cartridge">
-  <div class="panel-heading"><h4 name="titreAlerte" class="headingWarningPrinters">{{cartridge.modele}} {{cartridge.type}}</h4><span class="fa fa-exclamation-triangle warningCartridges"></div>
-  <div class="panel-body"> {% if cartridge.quantite < 5 and cartridge.quantite >= 3 %}
-
-  <li class="list-group-item ">Attention Stock de Cartouche inférieur à 5 {% if cartridge.statuscommande %}<p><span class="label label-success">Commande en cours...</span></p>{% endif %}</li>
-
-  {% endif %}
-  {% if cartridge.quantite < 3 %}
-  <li class="list-group-item list-group-item-danger">Attention Stock de Cartouche inférieur à 3, COMMANDE URGENTE {% if cartridge.statuscommande %}<p><span class="label label-success">Commande en cours...</span></p>{% endif %}</li>
-  {% endif %} </div>
-</div>
-</ul>
-       {% endif %}
-    {% endfor%}
-</div>
-
-  </div>
-
-
-<div id="page_navigation"> </div>
-    
+    <div class="row">
+        <div id="listCartridge" >
+            {% for cartridge in cartridges %}
+                {% if (cartridge.quantite < 5 and cartridge.quantite >= 3) or (cartridge.quantite < 3) %}
+                    <ul class="list-group">
+                        <div class="panel panel-cartridge">
+                            <div class="panel-heading"><h4 name="titreAlerte" class="headingWarningPrinters">{{cartridge.modele}} {{cartridge.type}}</h4><span class="fa fa-exclamation-triangle warningCartridges"></div>
+                            <div class="panel-body">
+                            {% if cartridge.quantite < 5 and cartridge.quantite >= 3 %}
+                                <li class="list-group-item ">Attention Stock de Cartouche inférieur à 5 {% if cartridge.statuscommande %}<p><span class="label label-success">Commande en cours...</span></p>{% endif %}</li>
+                            {% endif %}
+                            {% if cartridge.quantite < 3 %}
+                                <li class="list-group-item list-group-item-danger">Attention Stock de Cartouche inférieur à 3, COMMANDE URGENTE {% if cartridge.statuscommande %}<p><span class="label label-success">Commande en cours...</span></p>{% endif %}</li>
+                            {% endif %} 
+                            </div>
+                        </div>
+                    </ul>
+                {% endif %}
+            {% endfor%}
+        </div>
+    </div>
+    <div id="page_navigation"> </div>
 {% endblock %}
 
 {% block javascripts %}
-    {{parent()}}
-<script>
-    $(function() {
-      $('tr').each(function(){
-
-        var quantite = $(this).attr("data-quantite");
-
-        if( quantite < 5 && quantite >= 3){
-                $(this).css('background-color', '#FAB861');
-            }
-
-            if( quantite <3){
-                $(this).css('background-color', '#F66060');
-            }
-
-
-      });
-     
-
-
-
-
-    });
-    </script>
-<script> 
-
-    var show_per_page = 3; 
-    var current_page = 0;
-
-    function set_display(first, last) {
-      if($('#listCartridge')){
-        $('#listCartridge').children().css('display', 'none');
-      $('#listCartridge').children().slice(first, last).css('display', 'block');
-      }
-
-      if($('#listPrinter')){
-        $('#listPrinter').children().css('display', 'none');
-      $('#listPrinter').children().slice(first, last).css('display', 'block');
-      }
-      
-    }
-
-    function previous(){
-        if($('.active').prev('.page_link').length) go_to_page(current_page - 1);
-    }
-
-    function next(){
-        if($('.active').next('.page_link').length) go_to_page(current_page + 1);
-    }
-
-    function go_to_page(page_num){
-      current_page = page_num;
-      start_from = current_page * show_per_page;
-      end_on = start_from + show_per_page;
-      set_display(start_from, end_on);
-      $('.active').removeClass('active');
-
-      if($('#cartridges')){
-        $('#cartridges').addClass('active');
-      }
-
-      if($('#printers')){
-        $('#printers').addClass('active');
-      }
-
-      
-      $('#id' + page_num).addClass('active');
-    }  
-
-    $(document).ready(function() {
-      var number_of_pages = 0;
-      if($('#listCartridge')){
-
-       number_of_pages = Math.ceil($('#listCartridge').children().length / show_per_page);
-      }
-
-      else if($('#listPrinter')){
-        number_of_pages = Math.ceil($('#listPrinter').children().length / show_per_page);
-      }
-
-      var nav = '<ul class="pagination"><li><a href="javascript:previous();">&laquo;</a>';
-
-      var i = -1;
-      while(number_of_pages > ++i){
-        nav += '<li class="page_link'
-        if(!i) nav += ' active';
-        nav += '" id="id' + i +'">';
-        nav += '<a href="javascript:go_to_page(' + i +')">'+ (i + 1) +'</a>';
-      }
-      nav += '<li><a href="javascript:next();">&raquo;</a></ul>';
-
-      $('#page_navigation').html(nav);
-      set_display(0, show_per_page);
-      
-    });
-
-  </script>
-    
-   <script type="text/javascript">
-     $(document).ready( function () {
-    $('#tableCartridge').DataTable({
-       "language": {
-            "lengthMenu": "Afficher _MENU_ cartouches par tableau",
-            "zeroRecords": "Aucune cartouche en stock",
-            "info": "Cartouche de _START_ à _END_ sur _TOTAL_ cartouches",
-            "infoEmpty": "Pas de résultats disponibles",
-            "search":         "Rechercher:",
-            "infoFiltered": "( Filtré sur _MAX_ cartouches au total)",
-            "paginate": {
-                "first":      "Début",
-                "last":       "Fin",
-                "next":       "Suivant",
-                "previous":   "Précédent"
-              }
-        },
-
-        "lengthMenu": [ 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100 ]
-    });
-} );
-   </script>
-
-  
-  {% endblock %}
+{{parent()}}
+    <script type="text/javascript" src="{{ asset('js/cartridge/AlertTabPageCartridge.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/cartridge/ListPageCartridge.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/cartridge/ParamTabPageCartridge.js') }}"></script>
+{% endblock %}
