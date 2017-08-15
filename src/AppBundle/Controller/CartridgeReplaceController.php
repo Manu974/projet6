@@ -19,25 +19,7 @@ class CartridgeReplaceController extends Controller
     */
     public function replaceAction(Request $request, $id, $slug)
     {
-        $repository = $this
-        ->getDoctrine()
-        ->getManager()
-        ->getRepository('AppBundle:Imprimante')
-        ;
-
-        $printer = $repository->find($id);
-
-        if($slug == "black"){
-            $printer->setBlack($printer->getBlack()+1);
-        }
-
-        if($slug == "red"){
-            $printer->setRed($printer->getRed()+1);
-        }
-
-        if($slug == "cyan"){
-            $printer->setCyan($printer->getCyan()+1);
-        }
+        $printer = $this->container->get('app.printer')->replaceCartridge($id, $slug);
 
         $em = $this->getDoctrine()->getManager();
 
@@ -52,25 +34,7 @@ class CartridgeReplaceController extends Controller
     */
     public function replaceBackAction(Request $request, $id, $slug)
     {
-        $repository = $this
-        ->getDoctrine()
-        ->getManager()
-        ->getRepository('AppBundle:Imprimante')
-        ;
-
-        $printer = $repository->find($id);
-
-        if($slug == "black"){
-            $printer->setBlack($printer->getBlack()-1);
-        }
-
-        if($slug == "red"){
-            $printer->setRed($printer->getRed()-1);
-        }
-
-        if($slug == "cyan"){
-            $printer->setCyan($printer->getCyan()-1);
-        }
+        $printer = $this->container->get('app.printer')->replaceBackCartridge($id, $slug);
 
         $em = $this->getDoctrine()->getManager();
 
@@ -85,15 +49,7 @@ class CartridgeReplaceController extends Controller
     */
     public function takeCartridgeAction(Request $request, $id)
     {
-        $repository = $this
-        ->getDoctrine()
-        ->getManager()
-        ->getRepository('AppBundle:Cartouche')
-        ;
-
-        $cartridge = $repository->find($id);
-
-        $cartridge->setQuantite($cartridge->getQuantite()-1);
+        $cartridge = $this->container->get('app.cartridge')->takeCartridge($id);
 
         $em = $this->getDoctrine()->getManager();
 
@@ -108,16 +64,8 @@ class CartridgeReplaceController extends Controller
     */
     public function depositCartridgeAction(Request $request, $id)
     {
-        $repository = $this
-        ->getDoctrine()
-        ->getManager()
-        ->getRepository('AppBundle:Cartouche')
-        ;
-
-        $cartridge = $repository->find($id);
-
-        $cartridge->setQuantite($cartridge->getQuantite()+1);
-
+       
+        $cartridge = $this->container->get('app.cartridge')->depositCartridge($id);
         $em = $this->getDoctrine()->getManager();
 
         $em->flush();

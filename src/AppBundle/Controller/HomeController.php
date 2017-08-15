@@ -19,30 +19,13 @@ class HomeController extends Controller
     */
     public function indexAction(Request $request)
     {
-        $repositoryImprimante = $this
-        ->getDoctrine()
-        ->getManager()
-        ->getRepository('AppBundle:Imprimante')
-        ;
+        
+        $printers = $this->container->get('app.printer')->findAllPrinters();
+        $numberPrinters = $this->container->get('app.printer')->numberOfPrinters();
 
-        $repositoryCartouche = $this
-        ->getDoctrine()
-        ->getManager()
-        ->getRepository('AppBundle:Cartouche')
-        ;
+        $cartridges = $this->container->get('app.cartridge')->findAllCartridges();
 
-        $repositoryCommande = $this
-        ->getDoctrine()
-        ->getManager()
-        ->getRepository('AppBundle:Commande')
-        ;
-
-        $printers = $repositoryImprimante->findAll();
-        $numberPrinters = $repositoryImprimante->numberPrinters();
-
-        $cartridges = $repositoryCartouche->findAll();
-
-        $commandes = $repositoryCommande->findAll();
+        $commandes = $this->container->get('app.commande')->findAllCommandes();
 
         return $this->render('home/index.html.twig', [
             "printers" => $printers,

@@ -19,13 +19,7 @@ class CartridgeController extends Controller
     */
     public function indexAction(Request $request)
     { 
-        $repository = $this
-        ->getDoctrine()
-        ->getManager()
-        ->getRepository('AppBundle:Cartouche')
-        ;
-
-        $cartridges = $repository->findAll();
+        $cartridges = $this->container->get('app.cartridge')->findAllCartridges();
 
         return $this->render('cartridge/index.html.twig', [
             "cartridges" => $cartridges,
@@ -39,8 +33,7 @@ class CartridgeController extends Controller
     public function addAction(Request $request)
     {
         $cartridge = new Cartouche();
-        $cartridge->setStatuscommande(false);
-        $cartridge->setReapprovisionnement(null);
+        $cartridge = $this->container->get('app.cartridge')->initCartridge($cartridge);
 
         $form = $this->get('form.factory')->create(CartoucheType::class, $cartridge);
 
@@ -69,13 +62,7 @@ class CartridgeController extends Controller
     public function editAction(Request $request, $id)
     {
 
-        $repository = $this
-        ->getDoctrine()
-        ->getManager()
-        ->getRepository('AppBundle:Cartouche')
-        ;
-
-        $cartridge = $repository->find($id);
+        $cartridge = $this->container->get('app.cartridge')->findOneCartridge($id);
 
         $form = $this->get('form.factory')->create(CartoucheType::class, $cartridge);
 
@@ -103,13 +90,7 @@ class CartridgeController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $this
-        ->getDoctrine()
-        ->getManager()
-        ->getRepository('AppBundle:Cartouche')
-        ;
-
-        $cartridge = $repository->find($id);
+        $cartridge = $this->container->get('app.cartridge')->findOneCartridge($id);
 
         $em->remove($cartridge);
         $em->flush();
