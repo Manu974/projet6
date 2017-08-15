@@ -48,4 +48,12 @@ class Cartridge
 
 		return $cartridge;	
 	}
+
+	public function initCartridge($cartridge)
+	{
+		$cartridge->setStatuscommande(false);
+        $cartridge->setReapprovisionnement(null);
+
+        return $cartridge;	
+	}
 }
