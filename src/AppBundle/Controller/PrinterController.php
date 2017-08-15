@@ -40,9 +40,8 @@ class PrinterController extends Controller
         $printer = new Imprimante();
 
         $form = $this->get('form.factory')->create(ImprimanteType::class, $printer);
-        $printer->setBlack(0);
-        $printer->setRed(0);
-        $printer->setCyan(0);
+        
+        $initCartridges = $this->container->get('app.printer_init')->initCartridges($printer);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();

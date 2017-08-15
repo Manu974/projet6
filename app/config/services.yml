@@ -38,3 +38,10 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    app.printer_init:
+        class: AppBundle\Services\Printer
+        public: true
+        arguments:
+            - 0
+        
