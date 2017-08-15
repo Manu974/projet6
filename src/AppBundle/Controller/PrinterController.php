@@ -18,13 +18,7 @@ class PrinterController extends Controller
     */
     public function indexAction(Request $request)
     {
-        $repository = $this
-        ->getDoctrine()
-        ->getManager()
-        ->getRepository('AppBundle:Imprimante')
-        ;
-
-        $printers = $repository->findAll();
+        $printers = $this->container->get('app.printer')->findAllPrinters();
 
         return $this->render('printer/index.html.twig', [
             "printers" => $printers,
@@ -41,7 +35,7 @@ class PrinterController extends Controller
 
         $form = $this->get('form.factory')->create(ImprimanteType::class, $printer);
         
-        $initCartridges = $this->container->get('app.printer_init')->initCartridges($printer);
+        $initCartridges = $this->container->get('app.printer')->initCartridges($printer);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -64,13 +58,7 @@ class PrinterController extends Controller
     */
     public function editAction(Request $request, $id)
     {
-        $repository = $this
-        ->getDoctrine()
-        ->getManager()
-        ->getRepository('AppBundle:Imprimante')
-        ;
-
-        $printer = $repository->find($id);
+        $printer = $this->container->get('app.printer')->findOnePrinter($id);
 
         $form = $this->get('form.factory')->create(ImprimanteType::class, $printer);
 
@@ -96,13 +84,8 @@ class PrinterController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $this
-        ->getDoctrine()
-        ->getManager()
-        ->getRepository('AppBundle:Imprimante')
-        ;
 
-        $printer = $repository->find($id);
+        $printer = $this->container->get('app.printer')->findOnePrinter($id);
 
         $em->remove($printer);
         $em->flush();

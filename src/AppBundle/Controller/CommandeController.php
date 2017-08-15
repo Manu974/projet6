@@ -22,16 +22,10 @@ class CommandeController extends Controller
     public function commandeAction(Request $request, $id)
     {
         $commande = new Commande();
-        $repository = $this
-        ->getDoctrine()
-        ->getManager()
-        ->getRepository('AppBundle:Cartouche')
-        ;
-
-        $cartridge = $repository->find($id);
-        $commande->setType($cartridge->getType());
-        $commande->setModele($cartridge->getModele());
-        $commande->setDatedelivraison(null);
+    
+        $cartridge = $this->container->get('app.cartridge')->findOneCartridge($id);
+        
+        $commande = $this->container->get('app.commande')->initCommande($commande,$cartridge);
 
         $form = $this->get('form.factory')->create(CommandeType::class, $commande);
 
@@ -62,13 +56,8 @@ class CommandeController extends Controller
     */
     public function cancelAction(Request $request, $id)
     {
-        $repositoryCommande = $this
-        ->getDoctrine()
-        ->getManager()
-        ->getRepository('AppBundle:Commande')
-        ;
-
-        $commandes = $repositoryCommande->findBy(['cartouche' => $id]);
+        
+        $commandes = $this->container->get('app.commande')->findSpecificCommandes($id);
 
         $em = $this->getDoctrine()->getManager();
 
@@ -87,13 +76,7 @@ class CommandeController extends Controller
     */
     public function validAction(Request $request, $id)
     {
-        $repositoryCommande = $this
-        ->getDoctrine()
-        ->getManager()
-        ->getRepository('AppBundle:Commande')
-        ;
-
-        $commandes = $repositoryCommande->findBy(['cartouche' => $id]);
+        $commandes = $this->container->get('app.commande')->findSpecificCommandes($id);
 
         $em = $this->getDoctrine()->getManager();
 

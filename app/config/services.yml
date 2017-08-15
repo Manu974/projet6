@@ -39,9 +39,25 @@ services:
     #     arguments:
     #         $someArgument: 'some_value'
 
-    app.printer_init:
+    app.printer:
         class: AppBundle\Services\Printer
         public: true
         arguments:
             - 0
+            - '@doctrine.orm.entity_manager'
+
+    app.cartridge:
+        class: AppBundle\Services\Cartridge
+        public: true
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
+    app.commande:
+        class: AppBundle\Services\Commande
+        public: true
+        arguments:
+            - '@doctrine.orm.entity_manager'
+
+           
+
         
